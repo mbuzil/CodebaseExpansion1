@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour {
+    [SerializeField] private Animator m_CastingHandAnimator;
+
     private Animator Animator {
         get { return m_Animator ??= GetComponent<Animator>(); }
     }
@@ -30,9 +32,9 @@ public class PlayerAnimator : MonoBehaviour {
 
     private static readonly int HorizontalInputAbs = Animator.StringToHash("horizontalInputAbs");
     private static readonly int VerticalVelocity = Animator.StringToHash("verticalVelocity");
-    private static readonly int Cast = Animator.StringToHash("cast");
     private static readonly int VerticalVelocityAbs = Animator.StringToHash("verticalVelocityAbs");
     private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
+    private static readonly int Cast = Animator.StringToHash("cast");
 
     private void OnEnable() {
         this.PlayerController.OnPlayerHorizontalInputRegistered += UpdateSpriteRendererFlip;
@@ -61,7 +63,7 @@ public class PlayerAnimator : MonoBehaviour {
     }
 
     private void TriggerPlayerCastedAnimation() {
-        this.Animator.SetTrigger(Cast);
+        this.m_CastingHandAnimator?.SetTrigger(Cast);
     }
 
     private void Update() {
