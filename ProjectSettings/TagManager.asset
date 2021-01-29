@@ -12,8 +12,8 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
-  - 
+  - Projectiles
+  - Entities
   - 
   - 
   - 
@@ -38,6 +38,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2526813029
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Foreground
+    uniqueID: 329469283
+    locked: 0
+  - name: Entities
+    uniqueID: 365904869
+    locked: 0
+  - name: Projectile
+    uniqueID: 163209185
     locked: 0
