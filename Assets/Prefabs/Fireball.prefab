@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1962332143485366648}
   - component: {fileID: 1962332143485366649}
   - component: {fileID: 4344839703348420445}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,6 +155,8 @@ MonoBehaviour:
       Data: 
   m_DestroyOnHit: 1
   m_Damage: 25
+  m_FadeIn: 1
+  m_Parent: {fileID: 0}
 --- !u!50 &1962332143485366648
 Rigidbody2D:
   serializedVersion: 4
@@ -215,7 +217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1962332144564238927}
   - component: {fileID: 1962332144564238960}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}

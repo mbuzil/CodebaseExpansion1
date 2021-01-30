@@ -8,14 +8,14 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class MapGenerator : SerializedMonoBehaviour {
+public class MapGenerator : SerializedMonoBehaviour, IMapGenerator {
     [SerializeField] private int m_Width = 4;
     [SerializeField] private int m_Height = 4;
 
     [SerializeField] List<Vector2Int> m_Path = new List<Vector2Int>();
     [SerializeField] List<BlockDescriptor> m_PathRoomDescriptors = new List<BlockDescriptor>();
 
-    [SerializeField] private GameObject[,] m_Map = null;
+    [SerializeField] private MapBlock[,] m_Map = null;
     [SerializeField] private List<GameObject> m_MapBlockPrefabs = null;
 
     [SerializeField] private Dictionary<GameObject, MapBlock> m_PrefabsToMapBlockDictionary = null;
@@ -27,16 +27,17 @@ public class MapGenerator : SerializedMonoBehaviour {
     };
 
     [Button]
-    private void GenerateMainPath() {
+    public void Generate() {
         WipeMap();
         MapPrefabsToBlockObjects();
 
-        m_Map = new GameObject[m_Width, m_Height];
+        GenerateMainPath();
+        GenerateRoomLayout();
+    }
+
+    private void GenerateMainPath() {
         m_Path = new List<Vector2Int>();
-        m_PathRoomDescriptors = new List<BlockDescriptor>();
-
         HashSet<Vector2Int> visitedPositions = new HashSet<Vector2Int>();
-
         Vector2Int startingPosition = new Vector2Int(Random.Range(0, m_Width), m_Height - 1);
         Vector2Int endPosition = new Vector2Int(Random.Range(0, m_Width), 0);
 
@@ -71,6 +72,11 @@ public class MapGenerator : SerializedMonoBehaviour {
             m_Path.Add(nextPosition);
             visitedPositions.Add(nextPosition);
         }
+    }
+
+    private void GenerateRoomLayout() {
+        m_Map = new MapBlock[m_Width, m_Height];
+        m_PathRoomDescriptors = new List<BlockDescriptor>();
 
         // Spawn the rooms according to descriptors on the main path
         for (int i = 0; i < m_Path.Count; i++) {
@@ -89,13 +95,20 @@ public class MapGenerator : SerializedMonoBehaviour {
             GameObject mapBlockPrefab = GetRandomMapBlockFromDescriptor(blockDescriptor);
             if (mapBlockPrefab == null) continue;
 
-            GameObject mapBlock = SpawnBlockAtPosition(mapBlockPrefab, m_Path[i].x, m_Path[i].y);
+            MapBlock mapBlock = SpawnBlockAtPosition(mapBlockPrefab, m_Path[i].x, m_Path[i].y)
+                .GetComponentInChildren<MapBlock>();
 
             if (i == 0) {
-                mapBlock.GetComponentInChildren<MapBlock>().StartingBlock = true;
+                mapBlock.StartingBlock = true;
             } else if (i == m_Path.Count - 1) {
                 mapBlock.GetComponentInChildren<MapBlock>().FinishBlock = true;
             }
+
+            mapBlock.MainPathBlock = true;
+
+            // Spawn direction signs and position to point at the next room
+            mapBlock.SpawnDirectionSign();
+            mapBlock.DirectionSign?.RotateTowards(m_Path[i + 1] - m_Path[i]);
 
             m_Map[m_Path[i].x, m_Path[i].y] = mapBlock;
         }
@@ -105,8 +118,10 @@ public class MapGenerator : SerializedMonoBehaviour {
             for (int y = 0; y < m_Height; y++) {
                 if (m_Map[x, y] == null) {
                     m_Map[x, y] = SpawnBlockAtPosition(m_MapBlockPrefabs[Random.Range(0, m_MapBlockPrefabs.Count)], x,
-                        y);
+                        y).GetComponentInChildren<MapBlock>();
                 }
+
+                m_Map[x, y].PopulateBlock();
             }
         }
     }
@@ -164,4 +179,6 @@ public class MapGenerator : SerializedMonoBehaviour {
                     m_Path[i + 1].y * MapBlock.MapBlockSize.y));
         }
     }
+
+   
 }

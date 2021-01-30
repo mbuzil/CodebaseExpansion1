@@ -13,10 +13,7 @@ public class ProjectileCollision : SerializedMonoBehaviour {
     [SerializeField] private int m_Damage = 25;
 
     [SerializeField] private bool m_FadeIn = true;
-
-    private Collider Collider {
-        get { return m_Collider ??= GetComponent<Collider>(); }
-    }
+    [SerializeField] private GameObject m_Parent;
 
     private List<SpriteRenderer> SpriteRenderers {
         get {
@@ -28,8 +25,6 @@ public class ProjectileCollision : SerializedMonoBehaviour {
         }
     }
 
-    private Collider m_Collider;
-    private GameObject m_Parent;
     private List<SpriteRenderer> m_SpriteRenderers = new List<SpriteRenderer>();
 
     private void OnDestroy() {
@@ -57,7 +52,7 @@ public class ProjectileCollision : SerializedMonoBehaviour {
 
         Damageable damageable = other.GetComponentInChildren<Damageable>();
         if (damageable != null) {
-            damageable.TakeDamage(m_Damage);
+            damageable.TakeDamage(transform, m_Damage);
         }
 
         if (m_DestroyOnHit) {

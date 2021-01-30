@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Damageable : MonoBehaviour {
@@ -11,6 +12,11 @@ public class Damageable : MonoBehaviour {
 
     [SerializeField] private int m_HP = 100;
     [SerializeField] private float m_DamageIFrameTime = 0.5f;
+
+    [SerializeField] private bool m_PushBack = false;
+
+    [SerializeField] [ShowIf("m_PushBack")]
+    private float m_PushBackStrength = 10;
 
     private List<SpriteRenderer> SpriteRenderers {
         get {
@@ -24,6 +30,12 @@ public class Damageable : MonoBehaviour {
 
     private bool CanTakeDamage => m_CurrentHP > 0 && Time.time > m_DamageTakenTimeStamp + m_DamageIFrameTime;
 
+    private Rigidbody2D Rigidbody2D {
+        get { return m_Rigidbody2D ??= GetComponent<Rigidbody2D>(); }
+    }
+
+    private Rigidbody2D m_Rigidbody2D;
+
     private int m_CurrentHP = Int32.MaxValue;
     private float m_DamageTakenTimeStamp = Single.MinValue;
     private List<SpriteRenderer> m_SpriteRenderers = new List<SpriteRenderer>();
@@ -33,8 +45,13 @@ public class Damageable : MonoBehaviour {
         m_CurrentHP = m_HP;
     }
 
-    public void TakeDamage(int damage) {
+    public void TakeDamage(Transform damageOrigin, int damage) {
         if (!this.CanTakeDamage) return;
+
+        if (m_PushBack) {
+            this.Rigidbody2D.AddForce((transform.position - damageOrigin.position).normalized * m_PushBackStrength,
+                ForceMode2D.Impulse);
+        }
 
         m_DamageTakenTimeStamp = Time.time;
         m_CurrentHP -= damage;

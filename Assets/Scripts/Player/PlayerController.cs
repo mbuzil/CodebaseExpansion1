@@ -6,9 +6,9 @@ using UnityEngine.Experimental.TerrainAPI;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class PlayerController : MonoBehaviour {
-    public event Action<float> OnPlayerHorizontalInputRegistered;
-    public event Action OnPlayerCasted;
+public class PlayerController : MonoBehaviour, IMovementEventCaster {
+    public event Action<float> OnHorizontalInputRegistered;
+    public event Action OnCasted;
     public event Action<bool> OnIsGroundedChanged;
 
     [SerializeField] private float m_MovementSpeed = 3f;
@@ -40,8 +40,11 @@ public class PlayerController : MonoBehaviour {
     private ProjectileSpawner m_ProjectileSpawner;
 
     private Rigidbody2D m_Rigidbody2D;
+    private IMovementEventCaster m_MovementEventCasterImplementation;
 
     private void Update() {
+        if (Time.timeScale <= 0) return;
+
         if (Physics2D.Raycast(transform.position, Vector2.down, m_GroundRaycastDistance, m_GroundLayer.value)) {
             this.IsGrounded = true;
         } else {
@@ -56,14 +59,14 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetButtonDown("Fire1")) {
             this.ProjectileSpawner.LaunchWithARecoil(5, 15);
-            this.OnPlayerCasted?.Invoke();
+            this.OnCasted?.Invoke();
         }
     }
 
     private void FixedUpdate() {
         float deltaX = Input.GetAxis("Horizontal");
         this.Rigidbody2D.velocity = new Vector2(deltaX * m_MovementSpeed, this.Rigidbody2D.velocity.y);
-        this.OnPlayerHorizontalInputRegistered?.Invoke(deltaX);
+        this.OnHorizontalInputRegistered?.Invoke(deltaX);
     }
 
     private void OnDrawGizmosSelected() {

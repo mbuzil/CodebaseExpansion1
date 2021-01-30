@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class VFXPool : MonoBehaviour {
-    // TODO: I'll make it into an actual pool one day maybe
+    // TODO: I'll make it into an actual pool if time allows
 
     public enum VFX {
         FireballPop
@@ -43,7 +43,7 @@ public class VFXPool : MonoBehaviour {
     private IEnumerator PlayVFXCoroutine(VFX vfx, Vector3 position) {
         GameObject spawnedPrefab = Instantiate(m_VFXToPrefabDictionary[vfx], transform);
         spawnedPrefab.transform.position = position;
-        
+
         ParticleSystem particleSystem = spawnedPrefab.GetComponent<ParticleSystem>();
         particleSystem.Play(true);
 

@@ -7,6 +7,8 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class ProjectileSpawner : MonoBehaviour {
+    [SerializeField] private float m_LaunchDelay = 0.1f;
+
     [SerializeField] private GameObject m_ProjectilePrefab;
 
     [SerializeField] private float m_ElevationAngle = 0;
@@ -25,6 +27,12 @@ public class ProjectileSpawner : MonoBehaviour {
     }
 
     public void Launch() {
+        StartCoroutine(DelayedLaunchCoroutine());
+    }
+
+    private IEnumerator DelayedLaunchCoroutine() {
+        yield return new WaitForSeconds(m_LaunchDelay);
+
         GameObject projectile = Instantiate(m_ProjectilePrefab);
         projectile.transform.position = m_ProjectileOrigin.position;
 

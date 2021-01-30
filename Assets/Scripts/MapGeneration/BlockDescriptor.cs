@@ -38,7 +38,7 @@ public class BlockDescriptor {
         return true;
     }
 
-public override bool Equals(object obj) {
+    public override bool Equals(object obj) {
         return obj != null && Equals(obj as BlockDescriptor);
     }
 
