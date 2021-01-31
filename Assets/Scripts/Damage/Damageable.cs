@@ -19,6 +19,10 @@ public class Damageable : MonoBehaviour {
     [SerializeField] [ShowIf("m_PushBack")]
     private float m_PushBackStrength = 10;
 
+    private PlayerController PlayerController {
+        get { return m_PlayerController ??= GetComponentInChildren<PlayerController>(); }
+    }
+
     private List<SpriteRenderer> SpriteRenderers {
         get {
             if (m_SpriteRenderers.Count == 0) {
@@ -46,6 +50,7 @@ public class Damageable : MonoBehaviour {
     }
 
     private Rigidbody2D m_Rigidbody2D;
+    private PlayerController m_PlayerController;
 
     private int m_CurrentHP = Int32.MaxValue;
     private float m_DamageTakenTimeStamp = Single.MinValue;
@@ -60,8 +65,15 @@ public class Damageable : MonoBehaviour {
         if (!this.CanTakeDamage) return;
 
         if (m_PushBack) {
-            this.Rigidbody2D.AddForce((transform.position - damageOrigin.position).normalized * m_PushBackStrength,
-                ForceMode2D.Impulse);
+            if (this.PlayerController != null) {
+                Vector3 impulse = (transform.position - damageOrigin.position).normalized * m_PushBackStrength;
+                this.Rigidbody2D.AddForce(impulse.WithX(0),
+                    ForceMode2D.Impulse);
+                this.PlayerController.AddHorizontalImpulse(impulse.x);
+            } else {
+                this.Rigidbody2D.AddForce((transform.position - damageOrigin.position).normalized * m_PushBackStrength,
+                    ForceMode2D.Impulse);
+            }
         }
 
         m_DamageTakenTimeStamp = Time.time;

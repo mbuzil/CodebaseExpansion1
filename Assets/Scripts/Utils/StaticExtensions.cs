@@ -8,6 +8,14 @@ public static class StaticExtensions {
         return new Color(color.r, color.g, color.b, alpha);
     }
 
+    public static Vector3 WithY(this Vector3 vector, float y) {
+        return new Vector3(vector.x, y, vector.z);
+    }
+
+    public static Vector3 WithX(this Vector3 vector, float x) {
+        return new Vector3(x, vector.y, vector.z);
+    }
+
     public static void DOPop(this Transform transform) {
         transform.DOKill();
         transform.DOPunchScale(Vector3.one * 0.1f, 0.25f);

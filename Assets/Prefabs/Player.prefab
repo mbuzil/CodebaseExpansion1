@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_LookUpDownOffset: 3
-  m_GlanceSpeed: 0.1
 --- !u!1 &635035069707139346
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,6 +279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MovementSpeed: 8
   m_JumpStrength: 20
+  m_DashStrength: 13
   m_GroundLayer:
     serializedVersion: 2
     m_Bits: 64

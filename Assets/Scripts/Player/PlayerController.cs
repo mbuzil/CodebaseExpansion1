@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Experimental.TerrainAPI;
 using UnityEngine.UI;
@@ -38,10 +39,20 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster {
 
     private bool m_IsGrounded = false;
 
+    private float m_HorizontalImpulse = 0;
+    private float m_HorizontalImpulseFalloff = 7;
+    private float m_HorizontalImpulseCutoff = 0.5f;
+
+    private ContactPoint2D[] m_ContactPoints = new ContactPoint2D[32];
+
     private ProjectileSpawner m_ProjectileSpawner;
 
     private Rigidbody2D m_Rigidbody2D;
     private IMovementEventCaster m_MovementEventCasterImplementation;
+
+    public void AddHorizontalImpulse(float impulse) {
+        m_HorizontalImpulse += impulse;
+    }
 
     private void Update() {
         if (Time.timeScale <= 0) return;
@@ -69,16 +80,39 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster {
         if (Input.GetButtonDown("Fire3")) {
             if (PlayerState.Instance.Dash.CanCast) {
                 PlayerState.Instance.Dash.Cast();
-                this.Rigidbody2D.AddForce(transform.right * transform.localScale.x * m_DashStrength,
-                    ForceMode2D.Impulse);
+                AddHorizontalImpulse((-transform.right * transform.localScale.x * m_DashStrength).x);
             }
         }
     }
 
     private void FixedUpdate() {
+        ResolveCustomImpulseStep();
+
         float deltaX = Input.GetAxis("Horizontal");
-        this.Rigidbody2D.velocity = new Vector2(deltaX * m_MovementSpeed, this.Rigidbody2D.velocity.y);
+        this.Rigidbody2D.velocity =
+            new Vector2(deltaX * m_MovementSpeed + m_HorizontalImpulse, this.Rigidbody2D.velocity.y);
         this.OnHorizontalInputRegistered?.Invoke(deltaX);
+    }
+
+    private void ResolveCustomImpulseStep() {
+        float oldImpulse = m_HorizontalImpulse;
+
+        if (m_HorizontalImpulse != 0) {
+            m_HorizontalImpulse -= Mathf.Sign(m_HorizontalImpulse) * m_HorizontalImpulseFalloff * Time.deltaTime;
+        }
+
+        if (Math.Sign(oldImpulse) != Math.Sign(m_HorizontalImpulse)
+            || Mathf.Abs(m_HorizontalImpulse) < m_HorizontalImpulseCutoff) {
+            m_HorizontalImpulse = 0;
+        }
+
+        int contacts = this.Rigidbody2D.GetContacts(m_ContactPoints);
+        for (int i = 0; i < contacts; i++) {
+            if (Mathf.Abs(m_ContactPoints[i].normal.y) < 0.01f &&
+                Math.Sign(m_ContactPoints[i].normal.x) != Math.Sign(m_HorizontalImpulse)) {
+                m_HorizontalImpulse = 0;
+            }
+        }
     }
 
     private void OnDrawGizmosSelected() {
