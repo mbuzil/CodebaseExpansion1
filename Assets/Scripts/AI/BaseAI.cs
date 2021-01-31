@@ -25,11 +25,11 @@ public class BaseAI : MonoBehaviour, IMovementEventCaster {
     }
 
     protected PlayerController PlayerController {
-        get { return m_PlayerController ??= this.SceneManager.PlayerController; }
+        get { return m_PlayerController ??= this.GameSceneManager.PlayerController; }
     }
 
-    protected SceneManager SceneManager {
-        get { return m_SceneManager ??= GetComponentInParent<SceneManager>(); }
+    protected GameSceneManager GameSceneManager {
+        get { return m_GameSceneManager ??= GetComponentInParent<GameSceneManager>(); }
     }
 
     protected Damageable Damageable {
@@ -46,7 +46,7 @@ public class BaseAI : MonoBehaviour, IMovementEventCaster {
 
     private PlayerController m_PlayerController;
 
-    private SceneManager m_SceneManager;
+    private GameSceneManager m_GameSceneManager;
 
     private Damageable m_Damageable;
 

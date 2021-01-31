@@ -17,6 +17,11 @@ public class ProjectileCollision : SerializedMonoBehaviour {
     [SerializeField] private bool m_FadeIn = true;
     [SerializeField] private GameObject m_Parent;
 
+    public int Damage {
+        get => m_Damage;
+        set => m_Damage = value;
+    }
+
     private List<SpriteRenderer> SpriteRenderers {
         get {
             if (m_SpriteRenderers.Count == 0) {
@@ -35,8 +40,8 @@ public class ProjectileCollision : SerializedMonoBehaviour {
 
     private Collider2D m_Collider2D;
 
-    private void Awake() {
-        m_Damage = (int) (m_Damage + m_PerLevelIncrease * (PlayerState.Instance.Level - 1));
+    protected virtual void Awake() {
+        this.Damage = (int) (this.Damage + m_PerLevelIncrease * (PlayerState.Instance.Level - 1));
     }
 
     private void OnDestroy() {
@@ -63,7 +68,7 @@ public class ProjectileCollision : SerializedMonoBehaviour {
 
         Damageable damageable = other.GetComponentInChildren<Damageable>();
         if (damageable != null) {
-            damageable.TakeDamage(transform, m_Damage);
+            damageable.TakeDamage(transform, this.Damage);
             StartCoroutine(ToggleCollidersOnOff());
         }
 

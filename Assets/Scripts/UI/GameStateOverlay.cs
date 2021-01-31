@@ -8,16 +8,25 @@ using UnityEngine;
 public class GameStateOverlay : MonoBehaviour {
     [SerializeField] private CanvasGroup m_IntroScreen;
     [SerializeField] private CanvasGroup m_DeathScreen;
-    [SerializeField] private CanvasGroup m_CompletionScreen;
     [SerializeField] private CanvasGroup m_FullScreenCover;
+    [SerializeField] private CanvasGroup m_LoreNoteScreen;
     [SerializeField] private TextMeshProUGUI m_LevelLabel;
+    [SerializeField] private TextMeshProUGUI m_LoreNoteLabel;
+
 
     private bool m_IntroScreenActive = false;
     private bool m_DeathScreenActive = false;
-    private bool m_CompletionScreenActive = false;
+    private bool m_LoreNoteScreenActive = false;
+
+    [SerializeField] private string[] m_LoreNoteText = {
+        "This is level 1",
+        "This is level 2",
+        "This is the last one I have.."
+    };
 
     private void Start() {
         m_LevelLabel.text = "Level " + PlayerState.Instance.Level;
+        m_LoreNoteLabel.text = m_LoreNoteText[Mathf.Min(PlayerState.Instance.Level - 1, m_LoreNoteText.Length - 1)];
     }
 
     private void Update() {
@@ -32,13 +41,24 @@ public class GameStateOverlay : MonoBehaviour {
                 LoadScene(0);
             }
 
-            if (m_CompletionScreenActive) {
-                // Completion routine
-                PlayerState.Instance.Level++;
-                LoadScene(0);
+            if (m_LoreNoteScreenActive) {
+                m_LoreNoteScreenActive = false;
+                m_LoreNoteScreen.DOFade(0, 0.25f).SetUpdate(true).OnComplete(() => { Time.timeScale = 1; });
             }
         }
     }
+
+    public void ShowLoreNoteScreen() {
+        if (m_LoreNoteScreenActive) return;
+
+        Time.timeScale = 0;
+
+        m_LoreNoteScreenActive = true;
+
+        m_LoreNoteScreen.alpha = 0;
+        m_LoreNoteScreen.DOFade(1, 0.5f).SetUpdate(true);
+    }
+
 
     public void ShowIntroScreen() {
         Time.timeScale = 0;
@@ -50,9 +70,8 @@ public class GameStateOverlay : MonoBehaviour {
     }
 
     private void HideIntroScreen() {
-        Time.timeScale = 1;
         m_IntroScreenActive = false;
-        m_IntroScreen.DOFade(0, 0.5f);
+        m_IntroScreen.DOFade(0, 0.5f).SetUpdate(true).OnComplete(() => { Time.timeScale = 1; });
     }
 
     public void ShowDeathScreen() {
@@ -66,10 +85,9 @@ public class GameStateOverlay : MonoBehaviour {
         m_DeathScreen.DOFade(1, 0.5f).SetUpdate(true);
     }
 
-    public void ShowCompletionScreen() {
+    public void CompleteLevel() {
         Time.timeScale = 0;
-        m_CompletionScreenActive = true;
-        m_CompletionScreen.DOFade(1, 0.5f).SetUpdate(true);
+        LoadScene(2);
     }
 
     private void LoadScene(int id) {
@@ -77,9 +95,11 @@ public class GameStateOverlay : MonoBehaviour {
 
         m_IntroScreenActive = false;
         m_DeathScreenActive = false;
-        m_CompletionScreenActive = false;
 
         m_FullScreenCover.DOFade(1, 0.25f).SetUpdate(true).OnComplete(
-            () => UnityEngine.SceneManagement.SceneManager.LoadScene(id));
+            () => {
+                Time.timeScale = 1;
+                UnityEngine.SceneManagement.SceneManager.LoadScene(id);
+            });
     }
 }

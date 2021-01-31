@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 1962332143485366644}
   - component: {fileID: 1962332143485366643}
   - component: {fileID: 1962332143485366647}
-  - component: {fileID: -7988337866981346253}
   - component: {fileID: 1962332143485366648}
   - component: {fileID: 1962332143485366649}
   - component: {fileID: 4344839703348420445}
+  - component: {fileID: 8125415064795506556}
   m_Layer: 12
   m_Name: PlayerFireball
   m_TagString: Untagged
@@ -123,41 +123,6 @@ MonoBehaviour:
   m_MovementDirection: {x: 0, y: 0, z: 0}
   m_MovementSpeed: 0
   m_FalloffSpeed: 0.1
---- !u!114 &-7988337866981346253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1962332143485366642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1884828d67ce73944ba34fcca2187d73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: m_HitParticle
-      Entry: 7
-      Data: System.Nullable`1[[VFXPool+VFX, Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-  m_DestroyOnHit: 1
-  m_Damage: 7
-  m_PerLevelIncrease: 0
-  m_FadeIn: 1
-  m_Parent: {fileID: 0}
 --- !u!50 &1962332143485366648
 Rigidbody2D:
   serializedVersion: 4
@@ -208,6 +173,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AutoDespawnTime: 3
+--- !u!114 &8125415064795506556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962332143485366642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1527e3631db4eb5469639fd1c6dd3f1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: m_HitParticle
+      Entry: 7
+      Data: System.Nullable`1[[VFXPool+VFX, Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+  m_DestroyOnHit: 1
+  m_Damage: 7
+  m_PerLevelIncrease: 0
+  m_FadeIn: 1
+  m_Parent: {fileID: 0}
 --- !u!1 &1962332144564238926
 GameObject:
   m_ObjectHideFlags: 0

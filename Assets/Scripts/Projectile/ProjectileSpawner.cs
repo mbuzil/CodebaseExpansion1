@@ -16,7 +16,6 @@ public class ProjectileSpawner : MonoBehaviour {
 
     [SerializeField] private Transform m_ProjectileOrigin;
 
-
     public void SetElevationAngle(float angle) {
         m_ElevationAngle = angle;
     }

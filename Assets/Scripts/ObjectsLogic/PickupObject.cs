@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PickupObject : BaseProgrammaticAnimator {
     [SerializeField] private int m_CoinValue = 0;
+    [SerializeField] private Vector2Int m_CoinDiff = new Vector2Int(-2, 6);
 
     private bool m_Active = true;
 
@@ -35,7 +36,7 @@ public class PickupObject : BaseProgrammaticAnimator {
 
         transform.DOPop();
 
-        PlayerState.Instance.AddCoins(m_CoinValue);
+        PlayerState.Instance.AddCoins(m_CoinValue + Random.Range(m_CoinDiff.x, m_CoinDiff.y));
 
         for (int i = 0; i < this.SpriteRenderers.Count; i++) {
             if (i == 0) {

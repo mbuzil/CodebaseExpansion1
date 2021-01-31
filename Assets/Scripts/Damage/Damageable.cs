@@ -11,7 +11,7 @@ public class Damageable : MonoBehaviour {
     public event Action OnDamageTaken;
     public event Action OnDied;
 
-    [SerializeField] private int m_HP = 100;
+    [SerializeField] protected int m_HP = 100;
     [SerializeField] private float m_PerLevelIncrease = 0;
     [SerializeField] protected float m_DamageIFrameTime = 0.5f;
 
@@ -39,7 +39,7 @@ public class Damageable : MonoBehaviour {
         get { return m_Rigidbody2D ??= GetComponent<Rigidbody2D>(); }
     }
 
-    private int CurrentHP {
+    protected int CurrentHP {
         get => m_CurrentHP;
         set {
             if (m_CurrentHP != value) {
@@ -56,7 +56,7 @@ public class Damageable : MonoBehaviour {
     private List<SpriteRenderer> m_SpriteRenderers = new List<SpriteRenderer>();
 
 
-    private void Awake() {
+    protected virtual void Awake() {
         m_HP = (int) (m_HP + m_PerLevelIncrease * (PlayerState.Instance.Level - 1));
         this.CurrentHP = m_HP;
     }

@@ -8,7 +8,7 @@ public class SlimeAI : BaseAI {
     public override event Action<float> OnHorizontalInputRegistered;
     public override event Action OnCasted;
     public override event Action<bool> OnIsGroundedChanged;
-    
+
     [SerializeField] protected Transform m_ForwardRaycaster;
     [SerializeField] protected float m_ForwardRaycastDistance;
 

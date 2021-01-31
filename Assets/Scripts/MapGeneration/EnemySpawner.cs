@@ -34,7 +34,36 @@ public class EnemySpawner : MonoBehaviour {
 
         if (toSpawn != null) {
             GameObject spawnedPrefab = Instantiate(toSpawn, transform);
-            toSpawn.transform.localPosition = Vector3.zero;
+            spawnedPrefab.transform.localPosition = Vector3.zero;
+
+            switch (roll) {
+                case 0:
+                    if (PlayerState.Instance.HasUpgrade(PlayerState.PlayerUpgrade.AnticorrosiveLining)) {
+                        spawnedPrefab.GetComponentInChildren<ProjectileCollision>().Damage /= 2;
+                    }
+
+                    break;
+                case 1:
+                    if (PlayerState.Instance.HasUpgrade(PlayerState.PlayerUpgrade.GarlicVileNecklace)) {
+                        spawnedPrefab.GetComponentInChildren<ProjectileCollision>().Damage /= 2;
+                    }
+
+                    break;
+                case 2:
+                    if (PlayerState.Instance.HasUpgrade(PlayerState.PlayerUpgrade.VoidLens)) {
+                        spawnedPrefab.GetComponentInChildren<ProjectileCollision>().Damage /= 2;
+                    }
+
+
+                    break;
+                case 3:
+                    if (PlayerState.Instance.HasUpgrade(PlayerState.PlayerUpgrade.SoulMirror)) {
+                        spawnedPrefab.GetComponentInChildren<ProjectileCollision>().Damage /= 2;
+                    }
+
+
+                    break;
+            }
         }
     }
 

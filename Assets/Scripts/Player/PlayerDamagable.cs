@@ -8,19 +8,34 @@ public class PlayerDamagable : Damageable {
         get { return m_PlayerController ??= GetComponentInChildren<PlayerController>(); }
     }
 
-
     private PlayerController m_PlayerController;
 
+    protected override void Awake() {
+        int increases = 0;
+        if (PlayerState.Instance.HasUpgrade(PlayerState.PlayerUpgrade.EnchantedMaterials)) {
+            increases = PlayerState.Instance.UpgradesCollection[PlayerState.PlayerUpgrade.EnchantedMaterials];
+        }
+
+        m_HP = (int) (m_HP + 15 * increases);
+        this.CurrentHP = m_HP;
+    }
+
     private void OnEnable() {
-        if (this.PlayerController != null && PlayerState.Instance.HasDash2) {
+        if (this.PlayerController != null &&
+            PlayerState.Instance.HasUpgrade(PlayerState.PlayerUpgrade.DimensionalShift)) {
             this.PlayerController.OnDashActivated += ActivateIFrames;
         }
+
+        this.PlayerController.OnPotionConsumed += ActivationHealthPotion;
     }
 
     private void OnDisable() {
-        if (this.PlayerController != null && PlayerState.Instance.HasDash2) {
+        if (this.PlayerController != null && PlayerState.Instance != null &&
+            PlayerState.Instance.HasUpgrade(PlayerState.PlayerUpgrade.DimensionalShift)) {
             this.PlayerController.OnDashActivated -= ActivateIFrames;
         }
+
+        this.PlayerController.OnPotionConsumed -= ActivationHealthPotion;
     }
 
     protected override void PushBack(Transform damageOrigin) {
@@ -28,6 +43,10 @@ public class PlayerDamagable : Damageable {
         this.Rigidbody2D.AddForce(impulse.WithX(0),
             ForceMode2D.Impulse);
         this.PlayerController.AddHorizontalImpulse(impulse.x);
+    }
+
+    private void ActivationHealthPotion() {
+        this.CurrentHP = m_HP;
     }
 
     private void ActivateIFrames() {

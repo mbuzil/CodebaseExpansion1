@@ -28,3 +28,4 @@ MonoBehaviour:
   EnemyBookPrefab: {fileID: 7136403471906753644, guid: ad67992231df6d94daec602340771443, type: 3}
   EnemyBatPrefab: {fileID: 4685783583720456947, guid: 8a6718f3172599541b448a08a276af92, type: 3}
   EnemyGhostPrefab: {fileID: 6622317269833713567, guid: 89685c80aba7d6c4ba9794538c6ea4fc, type: 3}
+  DeadWizard: {fileID: 8222270769218005141, guid: dc0c333a4a4502a40b55a95645fb6830, type: 3}

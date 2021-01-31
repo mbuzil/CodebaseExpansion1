@@ -46,8 +46,10 @@ public class MapBlock : SerializedMonoBehaviour {
             objectSpawner.Spawn();
         }
 
-        foreach (EnemySpawner enemySpawner in this.EnemySpawners) {
-            enemySpawner.Spawn();
+        if (!this.StartingBlock) {
+            foreach (EnemySpawner enemySpawner in this.EnemySpawners) {
+                enemySpawner.Spawn();
+            }
         }
     }
 
@@ -78,6 +80,9 @@ public class MapBlock : SerializedMonoBehaviour {
         if (this.FinishBlock) {
             GameObject playerExfil = Instantiate(AssetDatabase.Instance.PlayerExfil, transform);
             playerExfil.transform.position = m_PlayerExfilLocation.position;
+
+            GameObject deadWizard = Instantiate(AssetDatabase.Instance.DeadWizard, transform);
+            deadWizard.transform.position = m_PlayerSpawnLocation.position;
         }
     }
 

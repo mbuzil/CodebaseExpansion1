@@ -29,4 +29,6 @@ public class AssetDatabase : SerializedScriptableObject {
     [SerializeField] public GameObject EnemyBookPrefab;
     [SerializeField] public GameObject EnemyBatPrefab;
     [SerializeField] public GameObject EnemyGhostPrefab;
+
+    [SerializeField] public GameObject DeadWizard;
 }

@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster {
     public event Action OnCasted;
     public event Action<bool> OnIsGroundedChanged;
     public event Action OnDashActivated;
+    public event Action OnPotionConsumed;
 
     [SerializeField] private float m_MovementSpeed = 3f;
     [SerializeField] private float m_JumpStrength = 15f;
@@ -65,7 +66,10 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster {
         }
 
         if (Input.GetButtonDown("Jump") && this.IsGrounded) {
-            this.Rigidbody2D.AddForce(Vector2.up * m_JumpStrength, ForceMode2D.Impulse);
+            float jumpStrength = m_JumpStrength;
+            if (PlayerState.Instance.HasUpgrade(PlayerState.PlayerUpgrade.LevitationBoots))
+                jumpStrength *= 1.2f;
+            this.Rigidbody2D.AddForce(Vector2.up * jumpStrength, ForceMode2D.Impulse);
         } else if (Input.GetButtonUp("Jump") && this.Rigidbody2D.velocity.y > 0) {
             this.Rigidbody2D.velocity = new Vector2(this.Rigidbody2D.velocity.x, this.Rigidbody2D.velocity.y / 2f);
         }
@@ -75,6 +79,16 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster {
                 PlayerState.Instance.Fireball.Cast();
                 this.ProjectileSpawner.LaunchWithARecoil(5, 15);
                 this.OnCasted?.Invoke();
+            }
+        }
+
+        if (Input.GetButtonDown("Fire2")) {
+            if (PlayerState.Instance.UpgradesCollection.ContainsKey(PlayerState.PlayerUpgrade.HealingPotion)) {
+                int potionCount = PlayerState.Instance.UpgradesCollection[PlayerState.PlayerUpgrade.HealingPotion];
+                if (potionCount > 0) {
+                    PlayerState.Instance.UpgradesCollection[PlayerState.PlayerUpgrade.HealingPotion]--;
+                    this.OnPotionConsumed?.Invoke();
+                }
             }
         }
 
