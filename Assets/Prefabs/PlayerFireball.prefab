@@ -16,8 +16,8 @@ GameObject:
   - component: {fileID: 1962332143485366648}
   - component: {fileID: 1962332143485366649}
   - component: {fileID: 4344839703348420445}
-  m_Layer: 7
-  m_Name: Fireball
+  m_Layer: 12
+  m_Name: PlayerFireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -217,7 +217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1962332144564238927}
   - component: {fileID: 1962332144564238960}
-  m_Layer: 7
+  m_Layer: 12
   m_Name: Point Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}

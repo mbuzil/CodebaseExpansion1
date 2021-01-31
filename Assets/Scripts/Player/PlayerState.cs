@@ -10,6 +10,8 @@ public class PlayerState : MonoBehaviour {
     public static PlayerState Instance = null;
 
     public int Level = 1;
+    public bool HasDash = false;
+    public bool HasDash2 = false;
 
     public readonly Ability Fireball = new Ability();
     public readonly Ability Dash = new Ability();
@@ -45,7 +47,8 @@ public class PlayerState : MonoBehaviour {
     public void ResetPlayerState() {
         this.Fireball.Cooldown = 3;
         this.Dash.Cooldown = 1;
-        //this.Dash.Locked = true;
+
+        this.Dash.Locked = !this.HasDash;
 
         this.Coins = 0;
         this.Level = 1;

@@ -11,7 +11,7 @@ public class ObjectSpawner : MonoBehaviour {
     public void Spawn(int spawnIdOverride = -1) {
         Wipe();
 
-        if (Random.Range(0, 100) < (int) (m_SpawnChance * 100)) {
+        if (Random.Range(0, 100) < (int) ((m_SpawnChance + (PlayerState.Instance.Level - 1) * 4) * 100)) {
             int spawnId = spawnIdOverride;
             if (spawnId < 0) {
                 spawnId = Random.Range(0, m_SpawnList.Count);

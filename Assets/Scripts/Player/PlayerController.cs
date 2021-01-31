@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster {
     public event Action<float> OnHorizontalInputRegistered;
     public event Action OnCasted;
     public event Action<bool> OnIsGroundedChanged;
+    public event Action OnDashActivated;
 
     [SerializeField] private float m_MovementSpeed = 3f;
     [SerializeField] private float m_JumpStrength = 15f;
@@ -81,6 +82,8 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster {
             if (PlayerState.Instance.Dash.CanCast) {
                 PlayerState.Instance.Dash.Cast();
                 AddHorizontalImpulse((-transform.right * transform.localScale.x * m_DashStrength).x);
+
+                this.OnDashActivated?.Invoke();
             }
         }
     }
@@ -104,12 +107,14 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster {
         if (Math.Sign(oldImpulse) != Math.Sign(m_HorizontalImpulse)
             || Mathf.Abs(m_HorizontalImpulse) < m_HorizontalImpulseCutoff) {
             m_HorizontalImpulse = 0;
+            return;
         }
 
         int contacts = this.Rigidbody2D.GetContacts(m_ContactPoints);
         for (int i = 0; i < contacts; i++) {
             if (Mathf.Abs(m_ContactPoints[i].normal.y) < 0.01f &&
-                Math.Sign(m_ContactPoints[i].normal.x) != Math.Sign(m_HorizontalImpulse)) {
+                Math.Sign(m_ContactPoints[i].normal.x) != Math.Sign(m_HorizontalImpulse) &&
+                !Physics2D.GetIgnoreLayerCollision(10, 11)) {
                 m_HorizontalImpulse = 0;
             }
         }
