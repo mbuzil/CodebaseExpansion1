@@ -1,10 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public static class StaticExtensions {
     public static Color WithAlpha(this Color color, float alpha) {
         return new Color(color.r, color.g, color.b, alpha);
+    }
+
+    public static void DOPop(this Transform transform) {
+        transform.DOKill();
+        transform.DOPunchScale(Vector3.one * 0.1f, 0.25f);
     }
 
     // From: https://forum.unity.com/threads/clever-way-to-shuffle-a-list-t-in-one-line-of-c-code.241052/

@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class BaseDeathRoutine : MonoBehaviour {
-    private Damageable Damageable {
+    protected Damageable Damageable {
         get { return m_Damageable ??= GetComponentInChildren<Damageable>(); }
     }
 
@@ -45,5 +45,6 @@ public class BaseDeathRoutine : MonoBehaviour {
     protected virtual void Die() {
         ((MonoBehaviour) this.MovementEventCaster).enabled = false;
         this.EntityAnimator.enabled = false;
+        this.Damageable.enabled = false;
     }
 }

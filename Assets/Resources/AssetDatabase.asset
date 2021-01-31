@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: fff5190352ba4cc488a35657d382947d, type: 3}
   m_Name: AssetDatabase
-  m_EditorClassIdentifier: Assembly-CSharp::AssetDataBase
+  m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -23,4 +23,8 @@ MonoBehaviour:
     SerializationNodes: []
   PlayerDirectionSign: {fileID: 6598617678258754556, guid: 7703eed7ce5217b4d9468505c17bbe89, type: 3}
   PlayerPrefab: {fileID: 635035070157294243, guid: 5533d52b0e9966a4e84158d38b9d1337, type: 3}
-  PlayerExfil: {fileID: 8241029300751222008, guid: 0695302d0f72cbe4582ecb9c59f3a709, type: 3}
+  PlayerExfil: {fileID: 2808107674037740755, guid: e769dc7ef592e834194ff3302ab18831, type: 3}
+  EnemySlimePrefab: {fileID: 9115213472126970051, guid: d918c3343cfba0240bd810be1d4a976a, type: 3}
+  EnemyBookPrefab: {fileID: 7136403471906753644, guid: ad67992231df6d94daec602340771443, type: 3}
+  EnemyBatPrefab: {fileID: 4685783583720456947, guid: 8a6718f3172599541b448a08a276af92, type: 3}
+  EnemyGhostPrefab: {fileID: 6622317269833713567, guid: 89685c80aba7d6c4ba9794538c6ea4fc, type: 3}

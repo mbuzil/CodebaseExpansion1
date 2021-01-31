@@ -14,44 +14,38 @@ public class EnemyDeathRoutine : BaseDeathRoutine {
     }
 
     private List<DOTweenAnimation> DOTweenAnimations {
-        get {
-            if (m_DOTweenAnimation.Count == 0) {
-                m_DOTweenAnimation = GetComponentsInChildren<DOTweenAnimation>().ToList();
-            }
-
-            return m_DOTweenAnimation;
-        }
+        get { return m_DOTweenAnimation ??= GetComponentsInChildren<DOTweenAnimation>().ToList(); }
     }
 
     private List<SpriteRenderer> SpriteRenderers {
-        get {
-            if (m_SpriteRenderers.Count == 0) {
-                m_SpriteRenderers = GetComponentsInChildren<SpriteRenderer>().ToList();
-            }
-
-            return m_SpriteRenderers;
-        }
+        get { return m_SpriteRenderers ??= GetComponentsInChildren<SpriteRenderer>().ToList(); }
     }
 
-    private List<SpriteRenderer> m_SpriteRenderers = new List<SpriteRenderer>();
+    private List<SpriteRenderer> m_SpriteRenderers = null;
 
-    private ProjectileCollision m_ProjectileCollision;
+    private ProjectileCollision m_ProjectileCollision = null;
 
     private Rigidbody2D m_Rigidbody2D;
 
-    private List<DOTweenAnimation> m_DOTweenAnimation = new List<DOTweenAnimation>();
+    private List<DOTweenAnimation> m_DOTweenAnimation = null;
 
     protected override void Die() {
         base.Die();
+        
         this.ProjectileCollision.enabled = false;
         this.Rigidbody2D.isKinematic = false;
         this.Rigidbody2D.gravityScale = 3f;
+        
         foreach (DOTweenAnimation animation in this.DOTweenAnimations) {
             animation.DOKill();
         }
 
-        foreach (SpriteRenderer spriteRenderer in SpriteRenderers) {
-            spriteRenderer.DOFade(0, 1f).OnComplete(() => Destroy(gameObject));
+        for (int i = 0; i < this.SpriteRenderers.Count; i++) {
+            if (i == 0) {
+                this.SpriteRenderers[i].DOFade(0, 1f).OnComplete(() => Destroy(gameObject));
+            } else {
+                this.SpriteRenderers[i].DOFade(0, 1f);
+            }
         }
     }
 }

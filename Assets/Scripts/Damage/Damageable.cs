@@ -7,6 +7,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Damageable : MonoBehaviour {
+    public event Action<float> OnCurrentHealthChanged;
     public event Action OnDamageTaken;
     public event Action OnDied;
 
@@ -28,10 +29,20 @@ public class Damageable : MonoBehaviour {
         }
     }
 
-    private bool CanTakeDamage => m_CurrentHP > 0 && Time.time > m_DamageTakenTimeStamp + m_DamageIFrameTime;
+    private bool CanTakeDamage => this.CurrentHP > 0 && Time.time > m_DamageTakenTimeStamp + m_DamageIFrameTime;
 
     private Rigidbody2D Rigidbody2D {
         get { return m_Rigidbody2D ??= GetComponent<Rigidbody2D>(); }
+    }
+
+    private int CurrentHP {
+        get => m_CurrentHP;
+        set {
+            if (m_CurrentHP != value) {
+                m_CurrentHP = value;
+                this.OnCurrentHealthChanged?.Invoke(m_CurrentHP / (float) m_HP);
+            }
+        }
     }
 
     private Rigidbody2D m_Rigidbody2D;
@@ -42,7 +53,7 @@ public class Damageable : MonoBehaviour {
 
 
     private void Awake() {
-        m_CurrentHP = m_HP;
+        this.CurrentHP = m_HP;
     }
 
     public void TakeDamage(Transform damageOrigin, int damage) {
@@ -54,7 +65,7 @@ public class Damageable : MonoBehaviour {
         }
 
         m_DamageTakenTimeStamp = Time.time;
-        m_CurrentHP -= damage;
+        this.CurrentHP -= damage;
 
         foreach (SpriteRenderer spriteRenderer in SpriteRenderers) {
             spriteRenderer.DOColor(Color.red, m_DamageIFrameTime / 6f).SetLoops(6, LoopType.Yoyo);
@@ -62,7 +73,7 @@ public class Damageable : MonoBehaviour {
 
         this.OnDamageTaken?.Invoke();
 
-        if (m_CurrentHP <= 0) {
+        if (this.CurrentHP <= 0) {
             this.OnDied?.Invoke();
         }
     }

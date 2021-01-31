@@ -58,8 +58,11 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster {
         }
 
         if (Input.GetButtonDown("Fire1")) {
-            this.ProjectileSpawner.LaunchWithARecoil(5, 15);
-            this.OnCasted?.Invoke();
+            if (PlayerState.Instance.Fireball.CanCast) {
+                PlayerState.Instance.Fireball.Cast();
+                this.ProjectileSpawner.LaunchWithARecoil(5, 15);
+                this.OnCasted?.Invoke();
+            }
         }
     }
 

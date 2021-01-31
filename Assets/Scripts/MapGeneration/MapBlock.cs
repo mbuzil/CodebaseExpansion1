@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -15,18 +16,36 @@ public class MapBlock : SerializedMonoBehaviour {
     public bool StartingBlock { get; set; }
     public bool FinishBlock { get; set; }
     public bool MainPathBlock { get; set; }
-
     public DirectionSign DirectionSign { get; private set; } = null;
 
+    private List<ObjectSpawner> ObjectSpawners {
+        get { return m_ObjectSpawners ??= GetComponentsInChildren<ObjectSpawner>().ToList(); }
+    }
+
+    private List<EnemySpawner> EnemySpawners {
+        get { return m_EnemySpawners ??= GetComponentsInChildren<EnemySpawner>().ToList(); }
+    }
+
+    private List<ObjectSpawner> m_ObjectSpawners = null;
+
+    private List<EnemySpawner> m_EnemySpawners = null;
 
     public void PopulateBlock() {
         SpawnPlayer();
         SpawnExfil();
+
+        foreach (ObjectSpawner objectSpawner in this.ObjectSpawners) {
+            objectSpawner.Spawn();
+        }
+
+        foreach (EnemySpawner enemySpawner in this.EnemySpawners) {
+            enemySpawner.Spawn();
+        }
     }
 
     public void SpawnDirectionSign() {
         if (this.MainPathBlock && !this.FinishBlock) {
-            GameObject directionSign = Instantiate(AssetDataBase.Instance.PlayerDirectionSign, transform);
+            GameObject directionSign = Instantiate(AssetDatabase.Instance.PlayerDirectionSign, transform);
             directionSign.transform.position = m_PlayerDirectionSignLocation.position;
             this.DirectionSign = directionSign.GetComponentInChildren<DirectionSign>();
         }
@@ -34,14 +53,14 @@ public class MapBlock : SerializedMonoBehaviour {
 
     private void SpawnPlayer() {
         if (this.StartingBlock) {
-            GameObject player = Instantiate(AssetDataBase.Instance.PlayerPrefab, transform);
+            GameObject player = Instantiate(AssetDatabase.Instance.PlayerPrefab, transform);
             player.transform.position = m_PlayerSpawnLocation.position;
         }
     }
 
     private void SpawnExfil() {
         if (this.FinishBlock) {
-            GameObject playerExfil = Instantiate(AssetDataBase.Instance.PlayerExfil, transform);
+            GameObject playerExfil = Instantiate(AssetDatabase.Instance.PlayerExfil, transform);
             playerExfil.transform.position = m_PlayerExfilLocation.position;
         }
     }
