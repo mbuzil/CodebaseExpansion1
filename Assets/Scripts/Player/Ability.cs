@@ -11,7 +11,7 @@ public class Ability {
     public Image AbilityImage { get; set; } = null;
 
 
-    public bool CanCast => Time.time > m_LastCast + this.Cooldown;
+    public bool CanCast => Time.time > m_LastCast + this.Cooldown && !this.Locked;
 
     public void UpdateAssociatedGraphics() {
         if (this.AbilityImage == null) return;
