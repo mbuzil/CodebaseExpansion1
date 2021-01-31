@@ -12,20 +12,16 @@ public class Damageable : MonoBehaviour {
     public event Action OnDied;
 
     [SerializeField] private int m_HP = 100;
-    [SerializeField] private float m_DamageIFrameTime = 0.5f;
+    [SerializeField] protected float m_DamageIFrameTime = 0.5f;
 
     [SerializeField] private bool m_PushBack = false;
 
     [SerializeField] [ShowIf("m_PushBack")]
-    private float m_PushBackStrength = 10;
+    protected float m_PushBackStrength = 10;
 
-    private bool Invulnerable = false;
-
-    private PlayerController PlayerController {
-        get { return m_PlayerController ??= GetComponentInChildren<PlayerController>(); }
-    }
-
-    private List<SpriteRenderer> SpriteRenderers {
+    protected bool Invulnerable = false;
+    
+    protected List<SpriteRenderer> SpriteRenderers {
         get {
             if (m_SpriteRenderers.Count == 0) {
                 m_SpriteRenderers = GetComponentsInChildren<SpriteRenderer>().ToList();
@@ -38,7 +34,7 @@ public class Damageable : MonoBehaviour {
     private bool CanTakeDamage =>
         this.CurrentHP > 0 && Time.time > m_DamageTakenTimeStamp + m_DamageIFrameTime && !Invulnerable;
 
-    private Rigidbody2D Rigidbody2D {
+    protected Rigidbody2D Rigidbody2D {
         get { return m_Rigidbody2D ??= GetComponent<Rigidbody2D>(); }
     }
 
@@ -53,7 +49,6 @@ public class Damageable : MonoBehaviour {
     }
 
     private Rigidbody2D m_Rigidbody2D;
-    private PlayerController m_PlayerController;
 
     private int m_CurrentHP = Int32.MaxValue;
     private float m_DamageTakenTimeStamp = Single.MinValue;
@@ -64,31 +59,12 @@ public class Damageable : MonoBehaviour {
         this.CurrentHP = m_HP;
     }
 
-    private void OnEnable() {
-        if (this.PlayerController != null && PlayerState.Instance.HasDash2) {
-            this.PlayerController.OnDashActivated += ActivateIFrames;
-        }
-    }
-
-    private void OnDisable() {
-        if (this.PlayerController != null && PlayerState.Instance.HasDash2) {
-            this.PlayerController.OnDashActivated -= ActivateIFrames;
-        }
-    }
 
     public void TakeDamage(Transform damageOrigin, int damage) {
         if (!this.CanTakeDamage) return;
 
         if (m_PushBack) {
-            if (this.PlayerController != null) {
-                Vector3 impulse = (transform.position - damageOrigin.position).normalized * m_PushBackStrength;
-                this.Rigidbody2D.AddForce(impulse.WithX(0),
-                    ForceMode2D.Impulse);
-                this.PlayerController.AddHorizontalImpulse(impulse.x);
-            } else {
-                this.Rigidbody2D.AddForce((transform.position - damageOrigin.position).normalized * m_PushBackStrength,
-                    ForceMode2D.Impulse);
-            }
+            PushBack(damageOrigin);
         }
 
         m_DamageTakenTimeStamp = Time.time;
@@ -105,21 +81,8 @@ public class Damageable : MonoBehaviour {
         }
     }
 
-    private void ActivateIFrames() {
-        StartCoroutine(ActivateIFramesCoroutine());
-    }
-
-    private IEnumerator ActivateIFramesCoroutine() {
-        this.Invulnerable = true;
-        Physics2D.IgnoreLayerCollision(10, 11, true);
-
-        foreach (SpriteRenderer spriteRenderer in SpriteRenderers) {
-            spriteRenderer.DOFade(0.5f, m_DamageIFrameTime / 6f).SetLoops(6, LoopType.Yoyo);
-        }
-
-        yield return new WaitForSeconds(m_DamageIFrameTime);
-
-        Physics2D.IgnoreLayerCollision(10, 11, false);
-        this.Invulnerable = false;
+    protected virtual void PushBack(Transform damageOrigin) {
+        this.Rigidbody2D.AddForce((transform.position - damageOrigin.position).normalized * m_PushBackStrength,
+            ForceMode2D.Impulse);
     }
 }

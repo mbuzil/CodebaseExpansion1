@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 635035070157294252}
   - component: {fileID: 635035070157294253}
   - component: {fileID: 635035070157294251}
-  - component: {fileID: 635035070157294248}
+  - component: {fileID: 942824009745381590}
   m_Layer: 11
   m_Name: Player
   m_TagString: Untagged
@@ -216,7 +216,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 365904869
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_Sprite: {fileID: 21300000, guid: c88b261cff3f61645bfcb11c72d72058, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_ElevationAngle: 0
   m_ProjectileSpeed: 15
   m_ProjectileOrigin: {fileID: 635035070496651538}
---- !u!114 &635035070157294248
+--- !u!114 &942824009745381590
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -323,7 +323,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 635035070157294243}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b427e7fe108fbbc4796ce47958a56582, type: 3}
+  m_Script: {fileID: 11500000, guid: b3ec4c8dfae14d447a01be1dc44425b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_HP: 100
@@ -431,7 +431,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 365904869
   m_SortingLayer: 2
-  m_SortingOrder: -1
+  m_SortingOrder: 99
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
