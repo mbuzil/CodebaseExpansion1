@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1767852694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1767852695}
+  m_Layer: 8
+  m_Name: GroundRaycaster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1767852695
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767852694}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.0520403, y: 1.7276515, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9115213472126970048}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1867829989
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1867829990}
+  m_Layer: 8
+  m_Name: ForwardRaycaster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1867829990
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867829989}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.032040358, y: 0.37765157, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9115213472126970048}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9115213471349836256
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,9 +154,9 @@ GameObject:
   - component: {fileID: 9115213472126970049}
   - component: {fileID: 9115213472126970062}
   - component: {fileID: 9115213472126970063}
-  - component: {fileID: 9115213472126970060}
   - component: {fileID: 9115213472126970061}
   - component: {fileID: 9115213472126970058}
+  - component: {fileID: 1167121274}
   m_Layer: 8
   m_Name: EnemySlime
   m_TagString: Untagged
@@ -117,6 +177,8 @@ Transform:
   m_Children:
   - {fileID: 9115213472351698232}
   - {fileID: 9115213471349836257}
+  - {fileID: 1767852695}
+  - {fileID: 1867829990}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -135,7 +197,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: -0.15, y: 0.88}
   serializedVersion: 2
-  m_Radius: 0.89
+  m_Radius: 0.87
 --- !u!114 &9115213472126970062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,18 +235,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &9115213472126970060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9115213472126970051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c18cd385d6f2f24394edec3f7cb92db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &9115213472126970061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,6 +260,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e432d891e13eaff41809f8521fed08ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1167121274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9115213472126970051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b0c7e970f3a7d1448b52cba2746c11b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MovementSpeed: 2
+  m_GroundRaycaster: {fileID: 1767852695}
+  m_GroundRaycastDistance: 2
+  m_ForwardRaycaster: {fileID: 1867829990}
+  m_ForwardRaycastDistance: 1.5
+  m_GroundLayer:
+    serializedVersion: 2
+    m_Bits: 1088
 --- !u!1 &9115213472351698237
 GameObject:
   m_ObjectHideFlags: 0

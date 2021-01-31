@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7136403471729088914}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.66, z: 0}
+  m_LocalPosition: {x: -0.21677303, y: 1.66, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7136403471906753647}
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 365904869
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: a9d267a8ea3e0cb408ff51b4032d4461, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -220,9 +220,9 @@ GameObject:
   - component: {fileID: 7136403471906753646}
   - component: {fileID: 7136403471906753633}
   - component: {fileID: 7136403471906753632}
-  - component: {fileID: 7136403471906753635}
   - component: {fileID: 7136403471906753634}
   - component: {fileID: 7136403471906753637}
+  - component: {fileID: 1385684534}
   m_Layer: 8
   m_Name: EnemyBook
   m_TagString: Untagged
@@ -259,7 +259,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.15, y: 1.83}
+  m_Offset: {x: 0.01, y: 1.83}
   serializedVersion: 2
   m_Radius: 0.89
 --- !u!114 &7136403471906753633
@@ -299,18 +299,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &7136403471906753635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7136403471906753644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c18cd385d6f2f24394edec3f7cb92db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7136403471906753634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,6 +324,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e432d891e13eaff41809f8521fed08ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1385684534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7136403471906753644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc634fe4314e67b49be54d13f76d37dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Speed: 3
+  m_MaxTimeInOneDirection: 5
+  m_MinTimeInOneDirection: 1
+  m_GroundLayer:
+    serializedVersion: 2
+    m_Bits: 1088
+  m_GroundRaycaster: {fileID: 7136403471729088919}
+  m_GroundRaycastDistance: 1
 --- !u!1 &7136403472740511055
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,7 +389,7 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.06}
+  m_Offset: {x: 0.2, y: 0.06}
   serializedVersion: 2
   m_Radius: 1.04
 --- !u!114 &7136403472740511040
