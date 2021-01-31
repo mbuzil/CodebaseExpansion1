@@ -43,6 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5725ae9f7cfd8e14bb021938f4304818, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SFXList: 
-  m_SFXClipsList: []
+  m_SFXList: 000000000100000002000000030000000400000005000000
+  m_SFXClipsList:
+  - {fileID: 8300000, guid: 4b0a13d4c1d6d934c8527b85cfa30cb7, type: 3}
+  - {fileID: 8300000, guid: 984330dcea4bef7439b42ac6eb0a5573, type: 3}
+  - {fileID: 8300000, guid: 58d00d5788a6f9b4fb0313543d81d547, type: 3}
+  - {fileID: 8300000, guid: 7b5ebfa825710ba41bd1e16e4d281e06, type: 3}
+  - {fileID: 8300000, guid: e99ea8865411d7b42a99efa0458f8a60, type: 3}
+  - {fileID: 8300000, guid: ee20c02070b91d549b715d2e29a2f690, type: 3}
   m_InitialPoolSize: 10

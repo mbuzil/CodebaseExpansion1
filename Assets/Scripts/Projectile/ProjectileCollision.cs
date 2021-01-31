@@ -73,6 +73,8 @@ public class ProjectileCollision : SerializedMonoBehaviour {
         }
 
         if (m_DestroyOnHit) {
+            SFXPool.Instance.PlaySFX(SFXPool.SFX.SpellImpact);
+            
             if (m_HitParticle != null) {
                 VFXPool.Instance?.PlayVFX(m_HitParticle.Value, transform.position);
             }

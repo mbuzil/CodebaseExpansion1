@@ -112,6 +112,8 @@ public class PlayerState : SerializedMonoBehaviour {
             amountToAdd *= 2;
         }
 
+        SFXPool.Instance.PlaySFX(SFXPool.SFX.Coin);
+
         this.Coins += amountToAdd;
         this.OnCoinsAdded?.Invoke(amountToAdd);
     }

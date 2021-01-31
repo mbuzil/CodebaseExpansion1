@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster {
         if (Input.GetButtonDown("Fire3")) {
             if (PlayerState.Instance.Dash.CanCast) {
                 PlayerState.Instance.Dash.Cast();
+                SFXPool.Instance.PlaySFX(SFXPool.SFX.Swoosh);
                 AddHorizontalImpulse((-transform.right * transform.localScale.x * m_DashStrength).x);
 
                 this.OnDashActivated?.Invoke();

@@ -32,6 +32,8 @@ public class ProjectileSpawner : MonoBehaviour {
     private IEnumerator DelayedLaunchCoroutine() {
         yield return new WaitForSeconds(m_LaunchDelay);
 
+        SFXPool.Instance.PlaySFX(SFXPool.SFX.SpellCast1);
+
         GameObject projectile = Instantiate(m_ProjectilePrefab);
         projectile.transform.position = m_ProjectileOrigin.position;
 

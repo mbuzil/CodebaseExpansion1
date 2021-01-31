@@ -64,6 +64,8 @@ public class Damageable : MonoBehaviour {
 
     public void TakeDamage(Transform damageOrigin, int damage) {
         if (!this.CanTakeDamage) return;
+        
+        SFXPool.Instance.PlaySFX(SFXPool.SFX.HitImpact);
 
         if (m_PushBack) {
             PushBack(damageOrigin);

@@ -46,5 +46,6 @@ public class BaseDeathRoutine : MonoBehaviour {
         ((MonoBehaviour) this.MovementEventCaster).enabled = false;
         this.EntityAnimator.enabled = false;
         this.Damageable.enabled = false;
+        SFXPool.Instance.PlaySFX(SFXPool.SFX.Death1);
     }
 }

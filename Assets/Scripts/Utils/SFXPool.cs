@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class SFXPool : MonoBehaviour {
     public enum SFX {
-        PlayerStep,
-        PlayerLanding,
-        PlayerCast,
-        PlayerJump,
-        PlayerHit
+        SpellCast1,
+        SpellImpact,
+        Death1,
+        HitImpact,
+        Coin,
+        Swoosh
     }
 
     [SerializeField] private List<SFX> m_SFXList = null;
