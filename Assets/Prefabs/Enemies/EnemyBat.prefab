@@ -94,9 +94,9 @@ GameObject:
   - component: {fileID: 4685783583720456945}
   - component: {fileID: 4685783583720456958}
   - component: {fileID: 4685783583720456959}
-  - component: {fileID: 4685783583720456956}
   - component: {fileID: 4685783583720456957}
   - component: {fileID: 4685783583720456954}
+  - component: {fileID: 2213339093322104373}
   m_Layer: 8
   m_Name: EnemyBat
   m_TagString: Untagged
@@ -173,18 +173,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4685783583720456956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4685783583720456947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c18cd385d6f2f24394edec3f7cb92db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4685783583720456957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,6 +198,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e432d891e13eaff41809f8521fed08ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2213339093322104373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4685783583720456947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc634fe4314e67b49be54d13f76d37dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Speed: 3
+  m_GroundLayer:
+    serializedVersion: 2
+    m_Bits: 1088
+  m_GroundRaycaster: {fileID: 4685783583897999112}
+  m_GroundRaycastDistance: 1
+  m_MaxTimeInOneDirection: 5
+  m_MinTimeInOneDirection: 1
 --- !u!1 &4685783583897999117
 GameObject:
   m_ObjectHideFlags: 0

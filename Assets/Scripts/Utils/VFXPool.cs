@@ -6,7 +6,9 @@ public class VFXPool : MonoBehaviour {
     // TODO: I'll make it into an actual pool if time allows
 
     public enum VFX {
-        FireballPop
+        FireballPop,
+        EnemyBookPop,
+        EnemyGhostPop
     }
 
     [SerializeField] private List<VFX> m_VFXList = null;

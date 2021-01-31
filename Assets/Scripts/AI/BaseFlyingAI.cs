@@ -4,29 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class BaseFlyingAI : MonoBehaviour, IMovementEventCaster {
-    public event Action<float> OnHorizontalInputRegistered;
-    public event Action OnCasted;
-    public event Action<bool> OnIsGroundedChanged;
+public class BaseFlyingAI : BaseAI {
+    public override event Action<float> OnHorizontalInputRegistered;
+    public override event Action OnCasted;
+    public override event Action<bool> OnIsGroundedChanged;
 
-    [SerializeField] private float m_Speed = 3f;
     [SerializeField] private float m_MaxTimeInOneDirection = 5f;
     [SerializeField] private float m_MinTimeInOneDirection = 1f;
-
-    [SerializeField] private LayerMask m_GroundLayer;
-    [SerializeField] private Transform m_GroundRaycaster;
-    [SerializeField] private float m_GroundRaycastDistance = 0.5f;
-
-    private Rigidbody2D Rigidbody2D {
-        get { return m_Rigidbody2D ??= GetComponent<Rigidbody2D>(); }
-    }
-
-    private Rigidbody2D m_Rigidbody2D;
 
     private Vector2 m_FlightDirection = new Vector2(0, 0);
     private float m_NextDirectionChangeTimestamp = float.MinValue;
 
-    private void FixedUpdate() {
+    protected override void MovementUpdate() {
+        if (CheckClearTowardsPlayer()) {
+            m_FlightDirection = (this.PlayerController.transform.position - m_GroundRaycaster.position).normalized;
+        }
+
         if (Time.time > m_NextDirectionChangeTimestamp || m_FlightDirection == Vector2.zero
                                                        || Physics2D.Raycast(m_GroundRaycaster.position,
                                                            m_FlightDirection, m_GroundRaycastDistance,
@@ -40,8 +33,9 @@ public class BaseFlyingAI : MonoBehaviour, IMovementEventCaster {
         this.OnHorizontalInputRegistered?.Invoke(this.Rigidbody2D.velocity.x);
     }
 
-    private void CheckClearTowardsPlayer() {
-        
+    protected bool CheckClearTowardsPlayer() {
+        return !Physics2D.Linecast(m_GroundRaycaster.position, this.PlayerController.transform.position,
+            m_GroundLayer);
     }
 
 

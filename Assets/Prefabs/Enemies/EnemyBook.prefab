@@ -222,7 +222,8 @@ GameObject:
   - component: {fileID: 7136403471906753632}
   - component: {fileID: 7136403471906753634}
   - component: {fileID: 7136403471906753637}
-  - component: {fileID: 1385684534}
+  - component: {fileID: 7346109374859744549}
+  - component: {fileID: 2228526431235682439}
   m_Layer: 8
   m_Name: EnemyBook
   m_TagString: Untagged
@@ -324,7 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e432d891e13eaff41809f8521fed08ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1385684534
+--- !u!114 &7346109374859744549
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -333,17 +334,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 7136403471906753644}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc634fe4314e67b49be54d13f76d37dd, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c69aeaf5e1ebc541a59f6dd4dbd2820, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LaunchDelay: 0.1
+  m_ProjectilePrefab: {fileID: 1962332143485366642, guid: 0bcfedd2e8612674f823fdbb7c95986c, type: 3}
+  m_ElevationAngle: 0
+  m_ProjectileSpeed: 8
+  m_ProjectileOrigin: {fileID: 7136403471729088919}
+--- !u!114 &2228526431235682439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7136403471906753644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c36559e368d8cd246aefaa83ddf4192a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Speed: 3
-  m_MaxTimeInOneDirection: 5
-  m_MinTimeInOneDirection: 1
   m_GroundLayer:
     serializedVersion: 2
     m_Bits: 1088
   m_GroundRaycaster: {fileID: 7136403471729088919}
   m_GroundRaycastDistance: 1
+  m_MaxTimeInOneDirection: 5
+  m_MinTimeInOneDirection: 1
+  m_ShootingCooldown: 3
 --- !u!1 &7136403472740511055
 GameObject:
   m_ObjectHideFlags: 0

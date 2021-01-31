@@ -8,7 +8,7 @@ public class SceneManager : MonoBehaviour {
         get { return m_MapGenerator ??= GetComponentInChildren<IMapGenerator>(); }
     }
 
-    private PlayerController PlayerController {
+    public PlayerController PlayerController {
         get { return m_PlayerController ??= GetComponentInChildren<PlayerController>(); }
     }
 

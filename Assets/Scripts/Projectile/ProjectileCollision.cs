@@ -25,7 +25,16 @@ public class ProjectileCollision : SerializedMonoBehaviour {
         }
     }
 
+    private Collider2D Collider2D {
+        get { return m_Collider2D ??= GetComponent<Collider2D>(); }
+    }
+
     private List<SpriteRenderer> m_SpriteRenderers = new List<SpriteRenderer>();
+
+    private Collider2D m_Collider2D;
+
+    private void Awake() {
+    }
 
     private void OnDestroy() {
         foreach (SpriteRenderer spriteRenderer in SpriteRenderers) {
@@ -53,6 +62,7 @@ public class ProjectileCollision : SerializedMonoBehaviour {
         Damageable damageable = other.GetComponentInChildren<Damageable>();
         if (damageable != null) {
             damageable.TakeDamage(transform, m_Damage);
+            StartCoroutine(ToggleCollidersOnOff());
         }
 
         if (m_DestroyOnHit) {
@@ -62,5 +72,11 @@ public class ProjectileCollision : SerializedMonoBehaviour {
 
             Destroy(gameObject);
         }
+    }
+
+    private IEnumerator ToggleCollidersOnOff() {
+        this.Collider2D.enabled = false;
+        yield return new WaitForSeconds(1f);
+        this.Collider2D.enabled = true;
     }
 }
