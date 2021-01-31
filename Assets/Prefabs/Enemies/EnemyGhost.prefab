@@ -449,5 +449,5 @@ MonoBehaviour:
   m_MinTimeInOneDirection: 1
   m_ShootingCooldown: 3
   m_AggroRange: 10
-  m_TeleportCD: 5
+  m_TeleportCD: 10
   m_TeleportRange: {x: 7, y: 9}
