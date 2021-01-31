@@ -27,7 +27,7 @@ public class ProjectileCollision : SerializedMonoBehaviour {
         }
     }
 
-    private Collider2D Collider2D {
+    public Collider2D Collider2D {
         get { return m_Collider2D ??= GetComponent<Collider2D>(); }
     }
 

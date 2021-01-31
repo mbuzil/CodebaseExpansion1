@@ -5,6 +5,8 @@ using DG.Tweening;
 using UnityEngine;
 
 public class EnemyDeathRoutine : BaseDeathRoutine {
+    [SerializeField] private int m_CoinValue = 0;
+
     private ProjectileCollision ProjectileCollision {
         get { return m_ProjectileCollision ??= GetComponentInChildren<ProjectileCollision>(); }
     }
@@ -31,11 +33,15 @@ public class EnemyDeathRoutine : BaseDeathRoutine {
 
     protected override void Die() {
         base.Die();
-        
+
         this.ProjectileCollision.enabled = false;
+        this.ProjectileCollision.Collider2D.enabled = false;
+        this.ProjectileCollision.StopAllCoroutines();
         this.Rigidbody2D.isKinematic = false;
         this.Rigidbody2D.gravityScale = 3f;
-        
+
+        PlayerState.Instance.AddCoins(m_CoinValue);
+
         foreach (DOTweenAnimation animation in this.DOTweenAnimations) {
             animation.DOKill();
         }

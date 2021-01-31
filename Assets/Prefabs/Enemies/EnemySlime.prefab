@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b427e7fe108fbbc4796ce47958a56582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HP: 24
+  m_HP: 21
   m_PerLevelIncrease: 2.5
   m_DamageIFrameTime: 0.5
   m_PushBack: 1
@@ -236,7 +236,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &9115213472126970061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e432d891e13eaff41809f8521fed08ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_CoinValue: 10
 --- !u!114 &1167121274
 MonoBehaviour:
   m_ObjectHideFlags: 0
