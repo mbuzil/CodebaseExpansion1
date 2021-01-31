@@ -178,7 +178,8 @@ MonoBehaviour:
       Entry: 8
       Data: 
   m_DestroyOnHit: 0
-  m_Damage: 25
+  m_Damage: 19
+  m_PerLevelIncrease: 1
   m_FadeIn: 0
   m_Parent: {fileID: 0}
 --- !u!114 &532377962670565013

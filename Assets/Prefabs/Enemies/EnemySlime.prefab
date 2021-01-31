@@ -139,7 +139,8 @@ MonoBehaviour:
       Entry: 8
       Data: 
   m_DestroyOnHit: 0
-  m_Damage: 25
+  m_Damage: 19
+  m_PerLevelIncrease: 1.5
   m_FadeIn: 0
   m_Parent: {fileID: 9115213472126970051}
 --- !u!1 &9115213472126970051
@@ -210,7 +211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b427e7fe108fbbc4796ce47958a56582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HP: 100
+  m_HP: 24
+  m_PerLevelIncrease: 2.5
   m_DamageIFrameTime: 0.5
   m_PushBack: 1
   m_PushBackStrength: 3

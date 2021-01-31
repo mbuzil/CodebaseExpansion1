@@ -12,6 +12,7 @@ public class Damageable : MonoBehaviour {
     public event Action OnDied;
 
     [SerializeField] private int m_HP = 100;
+    [SerializeField] private float m_PerLevelIncrease = 0;
     [SerializeField] protected float m_DamageIFrameTime = 0.5f;
 
     [SerializeField] private bool m_PushBack = false;
@@ -20,7 +21,7 @@ public class Damageable : MonoBehaviour {
     protected float m_PushBackStrength = 10;
 
     protected bool Invulnerable = false;
-    
+
     protected List<SpriteRenderer> SpriteRenderers {
         get {
             if (m_SpriteRenderers.Count == 0) {
@@ -56,6 +57,7 @@ public class Damageable : MonoBehaviour {
 
 
     private void Awake() {
+        m_HP = (int) (m_HP + m_PerLevelIncrease * (PlayerState.Instance.Level - 1));
         this.CurrentHP = m_HP;
     }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using DG.Tweening;
 using Sirenix.OdinInspector;
@@ -11,6 +12,7 @@ public class ProjectileCollision : SerializedMonoBehaviour {
     [SerializeField] private VFXPool.VFX? m_HitParticle = null;
     [SerializeField] private bool m_DestroyOnHit = true;
     [SerializeField] private int m_Damage = 25;
+    [SerializeField] private float m_PerLevelIncrease = 0;
 
     [SerializeField] private bool m_FadeIn = true;
     [SerializeField] private GameObject m_Parent;
@@ -34,6 +36,7 @@ public class ProjectileCollision : SerializedMonoBehaviour {
     private Collider2D m_Collider2D;
 
     private void Awake() {
+        m_Damage = (int) (m_Damage + m_PerLevelIncrease * (PlayerState.Instance.Level - 1));
     }
 
     private void OnDestroy() {
@@ -42,9 +45,8 @@ public class ProjectileCollision : SerializedMonoBehaviour {
         }
     }
 
-    public void Init(GameObject parent, int damage = 25) {
+    public void Init(GameObject parent) {
         m_Parent = parent;
-        m_Damage = damage;
 
         if (m_FadeIn) {
             foreach (SpriteRenderer spriteRenderer in SpriteRenderers) {

@@ -47,7 +47,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.06}
   serializedVersion: 2
-  m_Radius: 1.04
+  m_Radius: 0.71
 --- !u!114 &4685783582349845471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,7 +79,8 @@ MonoBehaviour:
       Entry: 8
       Data: 
   m_DestroyOnHit: 0
-  m_Damage: 25
+  m_Damage: 14
+  m_PerLevelIncrease: 1
   m_FadeIn: 0
   m_Parent: {fileID: 4685783583720456947}
 --- !u!1 &4685783583720456947
@@ -148,7 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b427e7fe108fbbc4796ce47958a56582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HP: 100
+  m_HP: 11
+  m_PerLevelIncrease: 2
   m_DamageIFrameTime: 0.5
   m_PushBack: 1
   m_PushBackStrength: 3
