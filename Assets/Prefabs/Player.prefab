@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1087138037}
   - component: {fileID: 5188859665272920843}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: CameraCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 635035069707139347}
   - component: {fileID: 635035069707139344}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Point Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 635035070157294253}
   - component: {fileID: 635035070157294251}
   - component: {fileID: 635035070157294248}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ MonoBehaviour:
   m_DashStrength: 13
   m_GroundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1088
   m_GroundRaycastDistance: 1.2
 --- !u!114 &635035070157294253
 MonoBehaviour:
@@ -339,7 +339,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 635035070496651538}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: ProjectileOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 635035070853177614}
   - component: {fileID: 635035070853177601}
   - component: {fileID: 635035070853177600}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CastingHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -26,11 +26,19 @@ public class MapBlock : SerializedMonoBehaviour {
         get { return m_EnemySpawners ??= GetComponentsInChildren<EnemySpawner>().ToList(); }
     }
 
+    private List<Collider2D> Walls {
+        get { return m_Walls ??= GetComponentsInChildren<Collider2D>().ToList(); }
+    }
+
     private List<ObjectSpawner> m_ObjectSpawners = null;
 
     private List<EnemySpawner> m_EnemySpawners = null;
 
+    private List<Collider2D> m_Walls = null;
+
     public void PopulateBlock() {
+        MarkVerticalWalls();
+
         SpawnPlayer();
         SpawnExfil();
 
@@ -48,6 +56,14 @@ public class MapBlock : SerializedMonoBehaviour {
             GameObject directionSign = Instantiate(AssetDatabase.Instance.PlayerDirectionSign, transform);
             directionSign.transform.position = m_PlayerDirectionSignLocation.position;
             this.DirectionSign = directionSign.GetComponentInChildren<DirectionSign>();
+        }
+    }
+
+    private void MarkVerticalWalls() {
+        foreach (Collider2D wall in this.Walls) {
+            if (Mathf.Abs(wall.transform.localRotation.eulerAngles.z) > 45) {
+                wall.gameObject.layer = 10;
+            }
         }
     }
 

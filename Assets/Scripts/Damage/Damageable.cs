@@ -19,6 +19,8 @@ public class Damageable : MonoBehaviour {
     [SerializeField] [ShowIf("m_PushBack")]
     private float m_PushBackStrength = 10;
 
+    private bool Invulnerable = false;
+
     private PlayerController PlayerController {
         get { return m_PlayerController ??= GetComponentInChildren<PlayerController>(); }
     }
@@ -33,7 +35,8 @@ public class Damageable : MonoBehaviour {
         }
     }
 
-    private bool CanTakeDamage => this.CurrentHP > 0 && Time.time > m_DamageTakenTimeStamp + m_DamageIFrameTime;
+    private bool CanTakeDamage =>
+        this.CurrentHP > 0 && Time.time > m_DamageTakenTimeStamp + m_DamageIFrameTime && !Invulnerable;
 
     private Rigidbody2D Rigidbody2D {
         get { return m_Rigidbody2D ??= GetComponent<Rigidbody2D>(); }
@@ -59,6 +62,18 @@ public class Damageable : MonoBehaviour {
 
     private void Awake() {
         this.CurrentHP = m_HP;
+    }
+
+    private void OnEnable() {
+        if (this.PlayerController != null && PlayerState.Instance.HasDash2) {
+            this.PlayerController.OnDashActivated += ActivateIFrames;
+        }
+    }
+
+    private void OnDisable() {
+        if (this.PlayerController != null && PlayerState.Instance.HasDash2) {
+            this.PlayerController.OnDashActivated -= ActivateIFrames;
+        }
     }
 
     public void TakeDamage(Transform damageOrigin, int damage) {
@@ -88,5 +103,23 @@ public class Damageable : MonoBehaviour {
         if (this.CurrentHP <= 0) {
             this.OnDied?.Invoke();
         }
+    }
+
+    private void ActivateIFrames() {
+        StartCoroutine(ActivateIFramesCoroutine());
+    }
+
+    private IEnumerator ActivateIFramesCoroutine() {
+        this.Invulnerable = true;
+        Physics2D.IgnoreLayerCollision(10, 11, true);
+
+        foreach (SpriteRenderer spriteRenderer in SpriteRenderers) {
+            spriteRenderer.DOFade(0.5f, m_DamageIFrameTime / 6f).SetLoops(6, LoopType.Yoyo);
+        }
+
+        yield return new WaitForSeconds(m_DamageIFrameTime);
+
+        Physics2D.IgnoreLayerCollision(10, 11, false);
+        this.Invulnerable = false;
     }
 }
