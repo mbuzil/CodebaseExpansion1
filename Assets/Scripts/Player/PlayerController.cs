@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster {
 
     [SerializeField] private float m_MovementSpeed = 3f;
     [SerializeField] private float m_JumpStrength = 15f;
+    [SerializeField] private float m_DashStrength = 15f;
 
     [SerializeField] private LayerMask m_GroundLayer;
     [SerializeField] private float m_GroundRaycastDistance = 0.5f;
@@ -62,6 +63,14 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster {
                 PlayerState.Instance.Fireball.Cast();
                 this.ProjectileSpawner.LaunchWithARecoil(5, 15);
                 this.OnCasted?.Invoke();
+            }
+        }
+
+        if (Input.GetButtonDown("Fire3")) {
+            if (PlayerState.Instance.Dash.CanCast) {
+                PlayerState.Instance.Dash.Cast();
+                this.Rigidbody2D.AddForce(transform.right * transform.localScale.x * m_DashStrength,
+                    ForceMode2D.Impulse);
             }
         }
     }

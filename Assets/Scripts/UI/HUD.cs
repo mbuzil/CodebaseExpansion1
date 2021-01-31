@@ -17,7 +17,7 @@ public class HUD : MonoBehaviour {
     public Image FireballAbilityImage => m_FireballAbilityImage;
     public Image DashAbilityImage => m_DashAbilityImage;
 
-    private void Awake() {
+    private void Start() {
         m_CoinsAdded.text = "";
         m_CoinsAmount.text = "" + PlayerState.Instance.Coins;
 

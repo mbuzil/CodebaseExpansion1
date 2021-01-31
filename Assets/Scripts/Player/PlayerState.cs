@@ -45,7 +45,7 @@ public class PlayerState : MonoBehaviour {
     public void ResetPlayerState() {
         this.Fireball.Cooldown = 3;
         this.Dash.Cooldown = 5;
-        this.Dash.Locked = true;
+        //this.Dash.Locked = true;
 
         this.Coins = 0;
         this.Level = 1;

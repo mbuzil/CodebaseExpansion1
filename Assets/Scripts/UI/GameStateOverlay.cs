@@ -16,7 +16,7 @@ public class GameStateOverlay : MonoBehaviour {
     private bool m_DeathScreenActive = false;
     private bool m_CompletionScreenActive = false;
 
-    private void Awake() {
+    private void Start() {
         m_LevelLabel.text = "Level " + PlayerState.Instance.Level;
     }
 
