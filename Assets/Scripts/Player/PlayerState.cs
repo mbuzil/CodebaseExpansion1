@@ -3,8 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using TMPro;
 
 public class PlayerState : SerializedMonoBehaviour {
+
+    //for cooldown onscreen
+    [SerializeField] TextMeshProUGUI RecoverCD;
+    private int RCD = 25;
+    private float one = 1f;
+    private bool recoverying = false;
+
+
     public enum PlayerUpgrade {
         LevitationBoots,
         SignetOfReplication,
@@ -44,6 +53,8 @@ public class PlayerState : SerializedMonoBehaviour {
 
     [NonSerialized] public readonly Ability Fireball = new Ability();
     [NonSerialized] public readonly Ability Dash = new Ability();
+    //New Spell Recover
+    [NonSerialized] public readonly Ability Recover = new Ability();
 
     private static PlayerState m_Instance = null;
 
@@ -92,12 +103,29 @@ public class PlayerState : SerializedMonoBehaviour {
 
         this.Fireball.UpdateAssociatedGraphics();
         this.Dash.UpdateAssociatedGraphics();
+
+        RecoverCD.text = RCD.ToString();//onscreen cooldown
+        if (recoverying)
+        {
+            one -= Time.deltaTime;
+            if (one <= 0) 
+            { 
+                RCD -= 1;
+                one = 1f;
+            }
+            if (RCD <= 0)
+            {
+                Recovering();
+                RCD = 25;
+            }
+        }
     }
 
     public void ResetPlayerState() {
         this.Fireball.Cooldown = 2.25f;
         this.Dash.Cooldown = 4;
         this.Dash.Locked = true;
+        this.Recover.Cooldown = 25f; //Spell Cooldown 25s
 
         this.UpgradesCollection.Clear();
 
@@ -116,5 +144,11 @@ public class PlayerState : SerializedMonoBehaviour {
 
         this.Coins += amountToAdd;
         this.OnCoinsAdded?.Invoke(amountToAdd);
+    }
+
+    //helper code
+    public void Recovering()
+    {
+        recoverying = !recoverying;
     }
 }

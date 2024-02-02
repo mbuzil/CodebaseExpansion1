@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster {
     [SerializeField] private float m_JumpStrength = 15f;
     [SerializeField] private float m_DashStrength = 15f;
 
+
     [SerializeField] private LayerMask m_GroundLayer;
     [SerializeField] private float m_GroundRaycastDistance = 0.5f;
 
@@ -99,6 +100,18 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster {
                 AddHorizontalImpulse((-transform.right * transform.localScale.x * m_DashStrength).x);
 
                 this.OnDashActivated?.Invoke();
+            }
+        }
+
+        //New Spell Recover
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if(PlayerState.Instance.Recover.CanCast)
+            {
+                PlayerState.Instance.Recover.Cast();
+                this.OnPotionConsumed?.Invoke();
+                Debug.Log("Recovered");
+                PlayerState.Instance.Recovering();
             }
         }
     }
