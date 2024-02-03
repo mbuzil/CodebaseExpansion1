@@ -22,19 +22,19 @@ public class ProjectileSpawner : MonoBehaviour {
 
     public void LaunchWithARecoil(float minAngle, float maxAngle) {
         SetElevationAngle(Random.Range(minAngle, maxAngle));
-        Launch();
+        Launch(m_ProjectilePrefab);
     }
 
-    public void Launch() {
-        StartCoroutine(DelayedLaunchCoroutine());
+    public void Launch(GameObject proj) {
+        StartCoroutine(DelayedLaunchCoroutine(proj));
     }
 
-    private IEnumerator DelayedLaunchCoroutine() {
+    private IEnumerator DelayedLaunchCoroutine(GameObject proj) {
         yield return new WaitForSeconds(m_LaunchDelay);
 
         SFXPool.Instance.PlaySFX(SFXPool.SFX.SpellCast1);
 
-        GameObject projectile = Instantiate(m_ProjectilePrefab);
+        GameObject projectile = Instantiate(proj);
         projectile.transform.position = m_ProjectileOrigin.position;
 
         ProjectileMovement movement = projectile.GetComponent<ProjectileMovement>();

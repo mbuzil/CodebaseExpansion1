@@ -13,6 +13,8 @@ public class PlayerState : SerializedMonoBehaviour {
     private float one = 1f;
     private bool recoverying = false;
 
+    
+
 
     public enum PlayerUpgrade {
         LevitationBoots,
@@ -53,8 +55,10 @@ public class PlayerState : SerializedMonoBehaviour {
 
     [NonSerialized] public readonly Ability Fireball = new Ability();
     [NonSerialized] public readonly Ability Dash = new Ability();
-    //New Spell Recover
+    //New Spells
     [NonSerialized] public readonly Ability Recover = new Ability();
+    [NonSerialized] public readonly Ability GreenFireball = new Ability();
+    [NonSerialized] public readonly Ability BulletTime = new Ability();
 
     private static PlayerState m_Instance = null;
 
@@ -102,6 +106,7 @@ public class PlayerState : SerializedMonoBehaviour {
         this.Dash.Locked = !HasUpgrade(PlayerUpgrade.TemporalWarp);
 
         this.Fireball.UpdateAssociatedGraphics();
+        this.GreenFireball.UpdateAssociatedGraphics();
         this.Dash.UpdateAssociatedGraphics();
 
         RecoverCD.text = RCD.ToString();//onscreen cooldown
@@ -126,6 +131,8 @@ public class PlayerState : SerializedMonoBehaviour {
         this.Dash.Cooldown = 4;
         this.Dash.Locked = true;
         this.Recover.Cooldown = 25f; //Spell Cooldown 25s
+        this.GreenFireball.Cooldown = 10f;//Spell Cooldown 10s
+        this.BulletTime.Cooldown = 60f;//Spell Cooldown 60s
 
         this.UpgradesCollection.Clear();
 
@@ -151,4 +158,5 @@ public class PlayerState : SerializedMonoBehaviour {
     {
         recoverying = !recoverying;
     }
+
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Experimental.TerrainAPI;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using TMPro;
 
 public class PlayerController : MonoBehaviour, IMovementEventCaster {
     public event Action<float> OnHorizontalInputRegistered;
@@ -17,7 +18,20 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster {
     [SerializeField] private float m_MovementSpeed = 3f;
     [SerializeField] private float m_JumpStrength = 15f;
     [SerializeField] private float m_DashStrength = 15f;
-
+    //GreenFireBall
+    [SerializeField] private GameObject GFB;
+    [SerializeField] private TextMeshProUGUI GFBCD;
+    private int GFBTimer = 10;
+    private float one = 1f;
+    private bool GFBIsTiming = false;
+    //BulletTime
+    private bool bTime = false;
+    private int bTimer = 10;
+    private float two = 1f;
+    [SerializeField] private TextMeshProUGUI BTCD;
+    private int BTcooldown = 60;
+    private float three = 1f;
+    private bool BTCDon = false;
 
     [SerializeField] private LayerMask m_GroundLayer;
     [SerializeField] private float m_GroundRaycastDistance = 0.5f;
@@ -32,7 +46,7 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster {
         }
     }
 
-    private ProjectileSpawner ProjectileSpawner {
+    public ProjectileSpawner ProjectileSpawner {
         get { return m_ProjectileSpawner ??= GetComponent<ProjectileSpawner>(); }
     }
 
@@ -110,8 +124,80 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster {
             {
                 PlayerState.Instance.Recover.Cast();
                 this.OnPotionConsumed?.Invoke();
-                Debug.Log("Recovered");
                 PlayerState.Instance.Recovering();
+            }
+        }
+
+
+        GFBCD.text = GFBTimer.ToString();
+        BTCD.text = BTcooldown.ToString();
+
+        //New Spell Green Fireball
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            if(PlayerState.Instance.GreenFireball.CanCast)
+            {
+                PlayerState.Instance.GreenFireball.Cast();
+                this.ProjectileSpawner.Launch(GFB);
+                this.OnCasted?.Invoke();
+                GFBIsTiming = true;
+            }
+        }
+        if(GFBIsTiming)
+        {
+            one -= Time.deltaTime;
+            if (one <= 0)
+            {
+                GFBTimer -= 1;
+                one = 1f;
+            }
+            if (GFBTimer <= 0)
+            {
+                GFBIsTiming = false;
+                GFBTimer = 10;
+            }
+        }
+
+        //New Spell Bullet Time
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            if(PlayerState.Instance.BulletTime.CanCast)
+            {
+                PlayerState.Instance.BulletTime.Cast();
+                Time.timeScale = 0.5f;
+                m_MovementSpeed = 6f;
+                bTime = true;
+                BTCDon = true;
+            }
+        }    
+        if(bTime)
+        {
+            two -= Time.deltaTime;
+            if (two <= 0)
+            {
+                bTimer -= 1;
+                two = 1f;
+            }
+            if (bTimer <= 0)
+            {
+                bTime = false;
+                bTimer = 10;
+                Time.timeScale = 1f;
+                m_MovementSpeed = 3f;
+            }
+        }
+        if(BTCDon)
+        {
+            three -= Time.deltaTime;
+            if (three <= 0)
+            {
+                BTcooldown -= 1;
+                three = 1f;
+            }
+            if (BTcooldown <= 0)
+            {
+                bTime = false;
+                BTcooldown = 60;
             }
         }
     }

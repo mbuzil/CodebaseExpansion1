@@ -280,6 +280,9 @@ MonoBehaviour:
   m_MovementSpeed: 8
   m_JumpStrength: 20
   m_DashStrength: 13
+  GFB: {fileID: 599842822377423030, guid: 3af595312216a9a4bbdb62595789cdaa, type: 3}
+  GFBCD: {fileID: 0}
+  BTCD: {fileID: 0}
   m_GroundLayer:
     serializedVersion: 2
     m_Bits: 1088
