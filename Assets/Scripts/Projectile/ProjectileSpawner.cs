@@ -25,11 +25,11 @@ public class ProjectileSpawner : MonoBehaviour {
         Launch(m_ProjectilePrefab);
     }
 
-    public void Launch(GameObject proj) {
+    public void Launch(GameObject proj) {//changed to make it take a GameObject
         StartCoroutine(DelayedLaunchCoroutine(proj));
     }
 
-    private IEnumerator DelayedLaunchCoroutine(GameObject proj) {
+    private IEnumerator DelayedLaunchCoroutine(GameObject proj) {//Changed to make it take a GameObject
         yield return new WaitForSeconds(m_LaunchDelay);
 
         SFXPool.Instance.PlaySFX(SFXPool.SFX.SpellCast1);

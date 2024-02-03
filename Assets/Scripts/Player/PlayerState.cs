@@ -12,7 +12,7 @@ public class PlayerState : SerializedMonoBehaviour {
     private int RCD = 25;
     private float one = 1f;
     private bool recoverying = false;
-
+    //
     
 
 
@@ -59,7 +59,7 @@ public class PlayerState : SerializedMonoBehaviour {
     [NonSerialized] public readonly Ability Recover = new Ability();
     [NonSerialized] public readonly Ability GreenFireball = new Ability();
     [NonSerialized] public readonly Ability BulletTime = new Ability();
-
+    //
     private static PlayerState m_Instance = null;
 
     public bool HasUpgrade(PlayerUpgrade playerUpgrade) {
@@ -106,7 +106,9 @@ public class PlayerState : SerializedMonoBehaviour {
         this.Dash.Locked = !HasUpgrade(PlayerUpgrade.TemporalWarp);
 
         this.Fireball.UpdateAssociatedGraphics();
+        //
         this.GreenFireball.UpdateAssociatedGraphics();
+        //
         this.Dash.UpdateAssociatedGraphics();
 
         RecoverCD.text = RCD.ToString();//onscreen cooldown
@@ -124,15 +126,18 @@ public class PlayerState : SerializedMonoBehaviour {
                 RCD = 25;
             }
         }
+        //
     }
 
     public void ResetPlayerState() {
         this.Fireball.Cooldown = 2.25f;
         this.Dash.Cooldown = 4;
         this.Dash.Locked = true;
+        //
         this.Recover.Cooldown = 25f; //Spell Cooldown 25s
         this.GreenFireball.Cooldown = 10f;//Spell Cooldown 10s
         this.BulletTime.Cooldown = 60f;//Spell Cooldown 60s
+        //
 
         this.UpgradesCollection.Clear();
 
@@ -158,5 +163,5 @@ public class PlayerState : SerializedMonoBehaviour {
     {
         recoverying = !recoverying;
     }
-
+    //
 }
