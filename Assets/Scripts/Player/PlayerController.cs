@@ -204,7 +204,7 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster
             {
                 PlayerState.Instance.BulletTime.Cast();
                 Time.timeScale = 0.5f;
-                m_MovementSpeed *= 2f;
+                m_MovementSpeed *= 2f;//made bullet time more exact
                 bTime = true;
                 BTCDon = true;
                 PlayerState.Instance.addXP(3);//adds xp when using spell
@@ -223,7 +223,7 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster
                 bTime = false;
                 bTimer = 10;
                 Time.timeScale = 1f;
-                m_MovementSpeed /= 2f;
+                m_MovementSpeed /= 2f;//made bullet time more exact
             }
         }
         if (BTCDon)
@@ -269,7 +269,7 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster
                 GFBTimer = (int)PlayerState.Instance.GreenFireball.Cooldown;
             }
         }
-        else
+        else if (plvl == 7)
         {
             if (BTCDon)
             {
