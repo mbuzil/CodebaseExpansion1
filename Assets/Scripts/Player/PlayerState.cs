@@ -75,6 +75,7 @@ public class PlayerState : SerializedMonoBehaviour {
         checkLevel();
     }
 
+    //Helper code
     public bool getCheckingLvl()
     {
         return checkingLvl;
@@ -87,7 +88,7 @@ public class PlayerState : SerializedMonoBehaviour {
     {
         return progress;
     }
-
+    //changes cooldowns based on level
     public void checkLevel()
     {
         checkingLvl = true;

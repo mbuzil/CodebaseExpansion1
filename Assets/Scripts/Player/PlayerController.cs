@@ -82,13 +82,13 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster
 
     private void Update()
     {
-        
+        //checks if new level
         if(PlayerState.Instance.getCheckingLvl())
         {
             changeCD(PlayerState.Instance.getProgress());
             PlayerState.Instance.isChecking();
         }
-
+        //
         if (Time.timeScale <= 0) return;
 
         if (Physics2D.Raycast(transform.position, Vector2.down, m_GroundRaycastDistance, m_GroundLayer.value))
@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster
                 PlayerState.Instance.Fireball.Cast();
                 this.ProjectileSpawner.LaunchWithARecoil(5, 15);
                 this.OnCasted?.Invoke();
-                PlayerState.Instance.addXP(1);
+                PlayerState.Instance.addXP(1);//adds xp when using spell
             }
         }
 
@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster
                 {
                     PlayerState.Instance.UpgradesCollection[PlayerState.PlayerUpgrade.HealingPotion]--;
                     this.OnPotionConsumed?.Invoke();
-                    PlayerState.Instance.addXP(1);
+                    PlayerState.Instance.addXP(1);//adds xp when using spell
                 }
             }
         }
@@ -150,7 +150,7 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster
                 SFXPool.Instance.PlaySFX(SFXPool.SFX.Swoosh);
                 AddHorizontalImpulse((-transform.right * transform.localScale.x * m_DashStrength).x);
                 this.OnDashActivated?.Invoke();
-                PlayerState.Instance.addXP(1);
+                PlayerState.Instance.addXP(1);//adds xp when using spell
             }
         }
 
@@ -162,7 +162,7 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster
                 PlayerState.Instance.Recover.Cast();
                 this.OnPotionConsumed?.Invoke();
                 PlayerState.Instance.Recovering();
-                PlayerState.Instance.addXP(2);
+                PlayerState.Instance.addXP(2);//adds xp when using spell
             }
         }
 
@@ -179,7 +179,7 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster
                 this.ProjectileSpawner.Launch(GFB);
                 this.OnCasted?.Invoke();
                 GFBIsTiming = true;
-                PlayerState.Instance.addXP(2);
+                PlayerState.Instance.addXP(2);//adds xp when using spell
             }
         }
         if (GFBIsTiming)
@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster
                 m_MovementSpeed *= 2f;
                 bTime = true;
                 BTCDon = true;
-                PlayerState.Instance.addXP(3);
+                PlayerState.Instance.addXP(3);//adds xp when using spell
             }
         }
         if (bTime)
@@ -237,14 +237,14 @@ public class PlayerController : MonoBehaviour, IMovementEventCaster
             if (BTcooldown <= 0)
             {
                 bTime = false;
-                BTcooldown = (int)PlayerState.Instance.BulletTime.Cooldown;
+                BTcooldown = (int)PlayerState.Instance.BulletTime.Cooldown;//changed to reflect new cooldown time
             }
         }
         //
     }
     
 
-
+    //changes cooldowns based on level
     public void changeCD(int plvl)
     {
         if (plvl == 3)
