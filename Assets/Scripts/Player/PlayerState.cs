@@ -13,7 +13,12 @@ public class PlayerState : SerializedMonoBehaviour {
     private float one = 1f;
     private bool recoverying = false;
     //
-    
+    // New Code Part 2
+    [SerializeField] TextMeshProUGUI LevelText;
+    private int progress = 1;
+    private int exp = 0;
+    public bool checkingLvl = false;
+    //
 
 
     public enum PlayerUpgrade {
@@ -51,6 +56,79 @@ public class PlayerState : SerializedMonoBehaviour {
 
     public int Level = 1;
 
+    //added for new progression
+    public void addXP(int n)
+    {
+        exp += n;
+        if (exp >= 10)
+            progress = 2;
+        if (exp >= 20)
+            progress = 3;
+        if (exp >= 35)
+            progress = 4;
+        if (exp >= 50)
+            progress = 5;
+        if (exp >= 70)
+            progress = 6;
+        if (exp >= 100)
+            progress = 7;
+        checkLevel();
+    }
+
+    public bool getCheckingLvl()
+    {
+        return checkingLvl;
+    }
+    public void isChecking()
+    {
+        checkingLvl = !checkingLvl;
+    }
+    public int getProgress()
+    {
+        return progress;
+    }
+
+    public void checkLevel()
+    {
+        checkingLvl = true;
+        if (progress == 2)
+        {
+            this.Recover.Cooldown = 20f;
+            if (recoverying)
+                RCD -= 5;
+            else
+                RCD = (int)this.Recover.Cooldown;
+        }
+        else if(progress == 3)
+        {
+            this.GreenFireball.Cooldown = 8f;
+        }
+        else if(progress == 4)
+        {
+            this.Recover.Cooldown = 15f;
+            if (recoverying)
+                RCD -= 5;
+            else
+                RCD = (int)this.Recover.Cooldown;
+        }
+        else if(progress == 5)
+        {
+            this.GreenFireball.Cooldown = 5f;
+        }
+        else if(progress == 6)
+        {
+            this.Recover.Cooldown = 12f;
+            if (recoverying)
+                RCD -= 3;
+            else
+                RCD = (int)this.Recover.Cooldown;
+        }
+        else
+        {
+            this.BulletTime.Cooldown = 30f;
+        }
+    }
+    //
     public Dictionary<PlayerUpgrade, int> UpgradesCollection = new Dictionary<PlayerUpgrade, int>();
 
     [NonSerialized] public readonly Ability Fireball = new Ability();
@@ -123,10 +201,11 @@ public class PlayerState : SerializedMonoBehaviour {
             if (RCD <= 0)
             {
                 Recovering();
-                RCD = 25;
+                RCD = (int) this.Recover.Cooldown;
             }
         }
         //
+        LevelText.text = "Experience: " + progress.ToString();
     }
 
     public void ResetPlayerState() {
